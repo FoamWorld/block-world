@@ -1,0 +1,97 @@
+body{
+    background-color:black;
+}
+a{
+    color:green;
+}
+a:hover{
+    background-color:green;
+    color:whitesmoke;
+}
+
+.menu_page,.intend_open_page{
+    position:absolute;
+    top:15%;
+    left:30%;
+    right:30%;
+    color:snow;
+}
+.menu_button,.saved_list{
+    position:relative;
+    left:20%;
+    width:60%;
+    height:48px;
+    cursor:pointer;
+}
+.intend_new_game_page,.setting_page,.intend_open_page{
+    color:snow;
+}
+.saved_list{
+    border:1px solid goldenrod;
+    background-color:gold;
+    text-align:center;
+    color:green;
+    font-size:32px;
+}
+
+#draw{
+    position:absolute;
+    left:0;
+    top:0;
+    width:480px;
+    height:480px;
+}
+#itms{
+    position:absolute;
+    left:0;
+    top:480px;
+    width:480px;
+    height:32px;
+}
+.it{
+    width:32px;
+    height:32px;
+    background-color:slategray;
+}
+.it0{
+    width:32px;
+    height:32px;
+    background-color:slategray;
+    border:1px solid silver;
+}
+
+.selected{background-color:silver;}
+.unselected{background-color:slategray;}
+.unselected:hover{background-color:silver;}
+#tabchoice{
+    position:absolute;
+    left:480px;
+    top:0;
+    right:20%;
+    height:24px;
+    font-family:monospace;
+    color:ghostwhite;
+    background-color:black;
+}
+#tabcontent{
+    position:absolute;
+    left:480px;
+    top:24px;
+    right:20%;
+    height:512px;
+    background-color:silver;
+}
+#event{
+    position:relative;
+    left:5%;
+    width:90%;
+    height:464px;
+    top:8px;
+    overflow-y:scroll;
+}
+#command{
+    position:relative;
+    left:5%;
+    bottom:0;
+    width:90%;
+}

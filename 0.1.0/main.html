@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Foam World</title>
+    <link rel="shortcut icon" href="data/img/StarRock.png" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+</head>
+<body onkeypress="press(event)" onunload="savegame()">
+    <div id="body">
+        <span style="position:absolute;top:40%;left:0%;width:100%;font-size:48px;text-align:center;">正在加载中...</span>
+    </div>
+    <!--工具脚本-->
+    <script src="src/misc.js"></script>
+    <script src="src/collision.js"></script>
+    <script src="src/gui.js"></script>
+    <!--底层脚本-->
+    <script src="src/items.js"></script>
+    <script src="src/entity.js"></script>
+    <script src="src/block.js"></script>
+    <!--中层脚本-->
+    <script src="src/command.js"></script>
+    <script src="src/map.js"></script>
+    <script src="src/save.js"></script>
+    <!--顶层脚本-->
+    <script src="src/main.js"></script>
+</body>
+</html>
