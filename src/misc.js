@@ -54,25 +54,6 @@ function arraywith(len,x){
     }
     return s
 }
-// 深拷贝
-function clone(obj){
-    if(obj==null||typeof(obj)!="object")return obj
-    if(obj instanceof Array){
-        var copy=[]
-        let l=obj.length
-        for(var i=0;i<l;i++)copy[i]=clone(obj[i])
-        return copy
-    }
-    if(obj instanceof Object){
-        var props=Object.getOwnPropertyDescriptors(obj)
-        let l=props.length
-        for(var prop in props){
-            props[prop].value=clone(props[prop].value)
-        }
-        return Object.create(Object.getPrototypeOf(obj),props)
-    }
-    throw new Error("Failed To Clone")
-}
 // js连这都没
 class Pair{
     constructor(a,b){this.a=a;this.b=b}
@@ -165,13 +146,11 @@ class IB{ // 简易物品栏管理器
         this.i=arrayof(this.l,function(){return new EI()})
         this.n=new Uint8Array((this.l+1)>>1)
     }
-    html(e=0,style="it0",spec=function(){return ""}){ // 偏移量
-        let s=""
+    html(par, e=0, style="it0", spec = function(){}){ // 偏移量
         for(let i=0;i<this.l;i++){
-            s+=item_board(i+e,style,this.i[i].text())
-            s+=spec(i)
+            par.appendChild(item_board(i+e, style, this.i[i].text()))
+            spec(par, i)
         }
-        return s
     }
     updategui(e=0,access="ndim.blk(guix,guiy).its",spec=function(){},type=function(){return "c"}){
         for(let i=0;i<this.l;i++){
@@ -202,7 +181,7 @@ class IB{ // 简易物品栏管理器
         for(let i=0;i<this.l;i++){
             if(last==0)return 0
             if(this.i[i] instanceof EI){
-                this.i[i]=clone(it)
+                this.i[i]=structuredClone(it)
                 if(last>st){
                     last-=st
                     this.setn(i,st)

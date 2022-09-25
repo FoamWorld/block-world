@@ -6,8 +6,7 @@ class Entity{
         this.vy=vy
     }
 }
-var pimg=new Image()
-pimg.src="data/skin/default.png"
+var pimg=srcimg("data/skin/default.png")
 var plylx,plyly,plybx,plyby
 class Player{
     constructor(x,y,θ=0,h=20,its=new IB(8)){
@@ -22,7 +21,7 @@ class Player{
         this.its=its
     }
     initgui(){
-        gid("itms").innerHTML=this.its.html(-8,"it")
+        this.its.html(gid("itms"), -8, "it")
         this.updategui()
     }
     changechosen(to){

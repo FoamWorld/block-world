@@ -127,10 +127,9 @@ class 箱子 extends Solid{
     constructor(its=new IB(16)){super();this.its=its}
     hard(){return 25}
     onguiopen(){
-        let s=this.its.html(0,"it0",function(i){
-            return (i==7)?"<br />":""
+        this.its.html(gid("gui"), 0, "it0", function(par, i){
+            if(i==7)par.appendChild(document.createElement("br"))
         })
-        gid("gui").innerHTML=s
         this.updategui()
     }
     updategui(){
@@ -420,12 +419,17 @@ class 合成台 extends Solid{
     hard(){return 25}
     onguiopen(){
         localtemp.i=new IB(10)
-        let s=localtemp.i.html(0,"it0",function(i){
-            if(i==2||i==5)return "<br />"
-            else if(i==8)return `<br /><button onclick="ndim.blk(${guix},${guiy}).work()">合成</button>`
-            else return ""
+        localtemp.i.html(gid("gui"), 0, "it0", function(par, i){
+            if(i==2||i==5)par.appendChild(document.createElement("br"))
+            else if(i==8){
+                let but = document.createElement("button")
+                but.innerText = "合成"
+                but.onclick = function(){
+                    ndim.blk(guix, guiy).work()
+                }
+                par.append(document.createElement("br"), but)
+            }
         })
-        gid("gui").innerHTML=s
         this.updategui()
     }
     onguiclose(x,y){throwits(x,y)}
@@ -460,8 +464,12 @@ class 刻制台 extends Solid{
     hard(){return 25}
     onguiopen(){
         localtemp.i=new IB(2)
-        let s=localtemp.i.html(0,"it0",function(i){return (i==0)?" => ":`<select id="guo"></select><button onclick="ndim.blk(${guix},${guiy}).work()">刻制</button>`})
-        gid("gui").innerHTML=s
+        localtemp.i.html(gid("gui"), 0, "it0", function(par, i){
+            if(i==0)par.append(document.createTextNode(" => "))
+            else{
+                par.innerHTML += `<select id="guo"></select><button onclick="ndim.blk(${guix},${guiy}).work()">刻制</button>`
+            }
+        })
         this.updategui()
     }
     onguiclose(x,y){throwits(x,y)}
@@ -496,9 +504,13 @@ class 模具台 extends Solid{
     hard(){return 25}
     onguiopen(){
         localtemp.i=new IB(2)
-        let s=localtemp.i.html(0,"it0",function(i){return (i==0)?" => ":`<select id="guo"></select><button onclick="ndim.blk(${guix},${guiy}).work()">制作</button>`})
-        gid("gui").innerHTML=s
-        s=""
+        localtemp.i.html(gid("gui"), 0, "it0", function(par, i){
+            if(i==0)par.append(document.createTextNode(" => "))
+            else{
+                par.innerHTML += `<select id="guo"></select><button onclick="ndim.blk(${guix},${guiy}).work()">制作</button>`
+            }
+        })
+        let s=""
         for(let i of Object.keys(mould_dat)){
             s+=`<option value="${i}">${i}</option>`
         }

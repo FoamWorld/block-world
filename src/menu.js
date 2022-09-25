@@ -7,19 +7,6 @@ const setting_chs=[
     ["显示事件","show-event"],
     ["显示帮助","show-help"],
 ]
-function setting_onload(){
-    let s=""
-    for(let i of setting_chs){
-        s+=`<span>${i[0]}</span><div class="d_check"><button class="o_check" onclick="setting_checkbox('${i[1]}')" id="${i[1]}%o"></button><span class="i_check" id="${i[1]}%i"></span></div><br />`
-    }
-    gid("checker").innerHTML=s
-    for(let i of setting_chs){
-        let t=setting[i[1]]
-        gid(i[1]+"%o").style.background=t?"#0078D4":"#FFFFFF"
-        gid(i[1]+"%i").style.left=t?"25px":"5px"
-        gid(i[1]+"%i").style.background=t?"#FFFFFF":"#929292"
-    }
-}
 function setting_checkbox(id){
     setting[id]=!setting[id]
     let t=setting[id]

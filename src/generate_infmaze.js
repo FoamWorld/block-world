@@ -50,7 +50,9 @@ Chunk.prototype.generate__infmaze=function(x,y){
     srand=(x<<15+y)^localsetting["seed"]<<3
     this.generate__infmaze_4(1,1,63,63)
     // 区块相连
-    this.blk[2*(rand()%32)+1][0]=new 空气()
+    let r1 = rand()%32
+    let content = r1<16&&(x^2+y^2)>25 ? new 空气() : new 箱子(new IB(16))
+    this.blk[2*(rand()%32)+1][0] = content
     this.blk[0][2*(rand()%32)+1]=new 空气()
 }
 function initgen__infmaze(){ply=new Player(1.5,1.5)}
