@@ -135,6 +135,9 @@ class 箱子 extends Solid{
     updategui(){
         this.its.updategui()
     }
+    give(it, n){
+        this.its.give(it, n)
+    }
 }
 class 萤石 extends 岩石{
     static tr=true

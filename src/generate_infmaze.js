@@ -51,8 +51,13 @@ Chunk.prototype.generate__infmaze=function(x,y){
     this.generate__infmaze_4(1,1,63,63)
     // 区块相连
     let r1 = rand()%32
-    let content = r1<16&&(x^2+y^2)>25 ? new 空气() : new 箱子(new IB(16))
+    let decision = r1<16&&(x^2+y^2)>25
+    let content = decision ? new 空气() : new 箱子(new IB(16))
+    if(!decision){
+        content.give(new IFB(new 树苗(0)), rand()%4+1)
+        content.give(new 桶(rand()%3), 1)
+    }
     this.blk[2*(rand()%32)+1][0] = content
-    this.blk[0][2*(rand()%32)+1]=new 空气()
+    this.blk[0][2*(rand()%32)+1] = decision ? new 玻璃() : new 空气()
 }
 function initgen__infmaze(){ply=new Player(1.5,1.5)}
