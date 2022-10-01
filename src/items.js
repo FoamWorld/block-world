@@ -24,8 +24,8 @@ i for infinite*/
 function drop(e){
     // 交换数据
     if(drag_from==drag_to)return
-    var f1=structuredClone(ref_get[drag_from](drag_from))
-    var f2=structuredClone(ref_get[drag_to](drag_to))
+    var f1=clone(ref_get[drag_from](drag_from))
+    var f2=clone(ref_get[drag_to](drag_to))
     if(f2.a instanceof EI){
         if(ref_type[drag_from]=="i"){
             if(e.ctrlKey)ref_set[drag_to](drag_to,new Pair(f1.a,f1.a.constructor.stack))
@@ -35,12 +35,12 @@ function drop(e){
             if(e.ctrlKey){ // 分半
                 let mi=f1.b>>1
                 ref_set[drag_from](drag_from,new Pair(mi==0 ? new EI() : f1.a,mi))
-                ref_set[drag_to](drag_to,new Pair(structuredClone(f1.a),f1.b-mi))
+                ref_set[drag_to](drag_to,new Pair(clone(f1.a),f1.b-mi))
             }
             else if(e.shiftKey){ // 分一
                 if(f1.b==1)return
                 ref_set[drag_from](drag_from,new Pair(f1.a,1))
-                ref_set[drag_to](drag_to,new Pair(structuredClone(f1.a),f1.b-1))
+                ref_set[drag_to](drag_to,new Pair(clone(f1.a),f1.b-1))
             }
             else{ // 移动
                 ref_set[drag_from](drag_from,new Pair(new EI(),0))
@@ -127,7 +127,7 @@ class IFB extends Item{
     amount(){return this.b.amount()}
     show(){this.b.show()}
     showita(d){return this.b.showita(d)}
-    formblock(){return structuredClone(this.b)}
+    formblock(){return clone(this.b)}
     t_mat(){return this.b.t_mat()}
 }
 class 书 extends Item{

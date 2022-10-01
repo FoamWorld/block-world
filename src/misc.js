@@ -54,6 +54,25 @@ function arraywith(len,x){
     }
     return s
 }
+// structuredClone 退钱！
+function clone(obj){
+    if(obj==null || typeof(obj)!="object")return obj
+    if(obj instanceof Array){
+        let copy=[]
+        let l=obj.length
+        for(var i=0;i<l;i++)copy[i]=clone(obj[i])
+        return copy
+    }
+    if(obj instanceof Object){
+        let props=Object.getOwnPropertyDescriptors(obj)
+        // let l=props.length
+        for(let prop in props){
+            props[prop].value=clone(props[prop].value)
+        }
+        return Object.create(Object.getPrototypeOf(obj), props)
+    }
+    throw new Error("Failed To Clone")
+}
 // js连这都没
 class Pair{
     constructor(a,b){this.a=a;this.b=b}
@@ -181,7 +200,7 @@ class IB{ // 简易物品栏管理器
         for(let i=0;i<this.l;i++){
             if(last==0)return 0
             if(this.i[i] instanceof EI){
-                this.i[i]=structuredClone(it)
+                this.i[i]=clone(it)
                 if(last>st){
                     last-=st
                     this.setn(i,st)

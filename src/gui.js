@@ -85,7 +85,7 @@ function game_load(par){ // 主界面
     input.id = "command"
     input.type = "text"
     input.size = 1
-    info.disabled = true
+    input.disabled = true
     info.append(event, input)
     let gui = document.createElement("div")
     gui.id = "gui"
