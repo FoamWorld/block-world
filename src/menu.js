@@ -1,45 +1,50 @@
-function back_to_menu(){
-    if(curpage=="game")end_game()
-    else if(curpage!="menu")gui_to("menu")
+function back_to_menu() {
+    if (curpage == "game") end_game()
+    else if (curpage != "menu") container_to("menu")
 }
 // setting
-const setting_chs=[
-    ["显示事件","show-event"],
-    ["显示帮助","show-help"],
+const setting_chs = [
+    ["显示事件", "show-event"],
+    ["显示帮助", "show-help"],
 ]
-function setting_checkbox(id){
-    setting[id]=!setting[id]
-    let t=setting[id]
-    gid(id+"%o").style.background=t?"#0078D4":"#FFFFFF"
-    gid(id+"%i").style.left=t?"25px":"5px"
-    gid(id+"%i").style.background=t?"#FFFFFF":"#929292"
+function setting_checkbox(id) {
+    setting[id] = !setting[id]
+    let t = setting[id]
+    gid(id + "%o").style.background = t ? "#0078D4" : "#FFFFFF"
+    gid(id + "%i").style.left = t ? "25px" : "5px"
+    gid(id + "%i").style.background = t ? "#FFFFFF" : "#929292"
 }
 // intend_open
 var saved_li
-function intend_open_onload(){
-    saved_li=[]
-    let l=localStorage.length
-    for(let i=0;i<l;i++){
-        var s=localStorage.key(i)
-        if(s.endsWith("%v")){
-            saved_li.push(s.slice(0,-2))
+function intend_open_onload() {
+    saved_li = []
+    let l = localStorage.length
+    for (let i = 0; i < l; i++) {
+        var s = localStorage.key(i)
+        if (s.endsWith("%v")) {
+            saved_li.push(s.slice(0, -2))
         }
     }
     intend_open_sl_upd()
 }
-function intend_open_sl_upd(){
-    let s=""
-    for(let i of saved_li){
-        s+=`<tr id="${i}%r" class="saved_tr"><td onclick="load_saved('${i}')" class="hbu">${i}</td><td class="hbu" onclick="intend_open_sl_del('${i}')">删除</td></tr>`
+function intend_open_sl_upd() {
+    let list = gid("savedlist")
+    for (let i of saved_li) {
+        let tr = createQElement("tr", { id: `${i}%r`, className: "saved_tr" })
+        tr.append(
+            createQElement("td", { innerText: i }),
+            createQElement("td", { innerText: "载入", className: "tech-clickable", onclick: function () { load_saved(i) } }),
+            createQElement("td", { innerText: "删除", className: "tech-clickable", onclick: function () { intend_open_sl_del(i) } }),
+        )
+        list.append(tr)
     }
-    gid("savedlist").innerHTML=s
 }
-function intend_open_sl_del(id){
-    gid(id+"%r").remove()
-    saved_li.splice(saved_li.indexOf(id),1)
+function intend_open_sl_del(id) {
+    gid(id + "%r").remove()
+    saved_li.splice(saved_li.indexOf(id), 1)
     eraseworld(id)
 }
 // game
-function game_onload(){
+function game_onload() {
     resize()
 }

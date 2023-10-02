@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <title>Foam World</title>
-    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="assets/css/game.css">
 </head>
-<body onkeypress="press(event)" onunload="savegame()" onresize="resize()">
-    <div id="body"></div>
+
+<body class="grid_table" onkeypress="press(event)" onunload="savegame()" onresize="resize()">
+    <div id="container"></div>
     <div id="bottom">
-        <a href="https://github.com/FoamWorld/docs" target="_blank">帮助</a>
-        <a href="https://github.com/FoamWorld/" target="_blank">github团队</a>
-        <span>|</span>
-        <a onclick="back_to_menu()">返回主菜单</a>
+        <button class="tech-clickable" onclick="back_to_menu()">返回主菜单</button>
+        <button id="append" class="tech-clickable" onclick="append_feature()">+</button>
     </div>
     <!--工具脚本-->
     <script src="src/misc.js"></script>
@@ -33,4 +34,5 @@
     <!--顶层脚本-->
     <script src="src/main.js"></script>
 </body>
+
 </html>
