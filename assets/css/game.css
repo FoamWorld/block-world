@@ -1,8 +1,4 @@
 /* 泛 */
-.status-hidden {
-    display: none;
-}
-
 .tech-clickable {
     color: green;
 }
@@ -39,17 +35,6 @@
 
 /* .setting-box */
 
-.box-over {
-    position: relative;
-    z-index: 1;
-    border: 5px solid grey;
-    margin: 80px;
-}
-
-.box-over:hover {
-    border-color: rgb(28, 157, 244);
-}
-
 /* 页面元素 */
 #bottom {
     position: absolute;
@@ -58,17 +43,6 @@
 }
 
 /* 状态 */
-.menu_page,
-.intend_open_page,
-.setting_page,
-.intend_new_game_page {
-    position: absolute;
-    top: 5%;
-    left: 15%;
-    right: 15%;
-    color: snow;
-}
-
 .d_check {
     position: relative;
     display: inline-block;
@@ -126,18 +100,33 @@
 }
 
 /* game */
-#draw {
-    position: absolute;
-    top: 0;
-    width: 480px;
-    height: 480px;
+.game-page {
+    display: grid;
+    gap: 20px;
+    justify-items: center;
 }
 
-#itms {
-    position: absolute;
-    top: 480px;
-    width: 480px;
-    height: 32px;
+.game-page #zbox {
+    grid-area: 1/1/3/2;
+    border: 5px solid grey;
+}
+
+.game-page #zbox:hover {
+    border-color: rgb(28, 157, 244);
+}
+
+.game-page #draw {
+    grid-area: 1/2/2/3
+}
+
+.game-page #itms {
+    grid-area: 2/2/3/3
+}
+
+.game-page #itms {
+    border: 5px solid gray;
+    padding: 10px;
+    width: 460px;
 }
 
 .selected {
@@ -152,21 +141,17 @@
     background-color: silver;
 }
 
-#gui {
-    position: absolute;
-    top: 0px;
-    right: 4px;
-    height: 512px;
-    background-color: silver;
+/* */
+#zbox.status-hidden {
+    display: none;
 }
 
-/* */
-.status-chatbox {
+#zbox.status-chatbox {
     background-color: #efefef;
 }
 
 .dialog-box {
-    height: 480px;
+    height: 510px;
     overflow-y: scroll;
     padding: 8px;
 }

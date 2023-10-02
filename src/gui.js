@@ -23,10 +23,10 @@ function menu_load(par) { // 主菜单
     par.replaceChildren(div, but1, document.createElement("br"), but2, document.createElement("br"), but3)
 }
 function setting_load(par) { // 设置
-    let div = createQElement("div", {id: "checker", className : "textarea-ink"})
+    let div = createQElement("div", { id: "checker", className: "textarea-ink" })
     div.append(
-        createQElement("span", {innerText:"设置用户名"}),
-        createQElement("input", {type: "text", id: "set-username", size: "10", value: "Anonymous"})
+        createQElement("span", { innerText: "设置用户名" }),
+        createQElement("input", { type: "text", id: "set-username", size: "10", value: "Anonymous" })
     )
     for (let i of setting_chs) {
         let t = setting[i[1]]
@@ -73,29 +73,30 @@ function intend_open_load(par) { // 打开存档
     par.replaceChildren(table)
 }
 function game_load(par) { // 主界面
-    let cvs = createQElement("canvas", {
-        id: "draw",
-        width: 480,
-        height: 480,
-        onmousemove: function (event) { mousemove(event) },
-        onmousedown: function (event) { mousedown(event) },
-        onmouseup: function (event) { mouseup(event) },
-        onmouseleave: function (event) { mouseleave(event) },
-    })
-    let itms = createQElement("div", { id: "itms" })
-    let over = createQElement("div", { id: "zbox", className: "box-over status-hidden" })
-    par.replaceChildren(cvs, itms, over)
+    par.replaceChildren(
+        createQElement("div", { id: "zbox", className: "status-hidden" }),
+        createQElement("canvas", {
+            id: "draw",
+            width: 480,
+            height: 480,
+            onmousemove: function (event) { mousemove(event) },
+            onmousedown: function (event) { mousedown(event) },
+            onmouseup: function (event) { mouseup(event) },
+            onmouseleave: function (event) { mouseleave(event) },
+        }),
+        createQElement("div", { id: "itms" })
+    )
 }
 function container_to(s, force = false) {
     if (s == curpage && !force) return
     let divbody = gid("container")
     globalThis[s + "_load"].call(null, divbody)
-    divbody.classList.replace(curpage + "_page", s + "_page")
+    divbody.classList.replace(curpage + "-page", s + "-page")
     curpage = s
     let t = globalThis[s + "_onload"]
     if (t != undefined) t.call()
 }
-function zbox_gui2(){
+function zbox_gui2() {
     inputting2 = true
     let zbox = gid("zbox")
     zbox.classList.replace("status-hidden", "status-gui")

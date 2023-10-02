@@ -105,7 +105,7 @@ function drawRot(ctx, img, x, y, w, h, rad) { // 画旋转的图片
 }
 function srcimg(s) {
     let i = new Image()
-    i.src = s
+    i.src = `assets/images/${s}`
     return i
 }
 function insertsto(b, d) {

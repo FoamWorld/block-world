@@ -326,20 +326,21 @@ class 树苗 extends NotSolid {
     }
 }
 class 藤蔓 extends Solid {
-    growing
-    update() {
-        if (!this.growing) return
+    constructor() { super(); this.tmp = 0 }
+    hard() { return 15 }
+    update(x, y) {
+        if (this.tmp != 0) return
         let rndstore = grand()
         let rx = (rndstore % 3) - 1;
         rndstore >>= 2;
         let ry = (rndstore % 3) - 1;
         rndstore >>= 2;
         if (rx != 0 && ry != 0) {
-            let r = getblk(x + rx, y + ry)
-            if (rndstore % 15 == 0) this.growing = false
+            let r = ndim.blk(x + rx, y + ry)
+            if (rndstore % 15 == 0) this.tmp = 1
             else if (!(r instanceof 空气)) {
-                setblk(x + rx, y + ry, new 藤蔓())
-                this.growing = false
+                makeblk(x + rx, y + ry, new 藤蔓())
+                this.tmp = 1
             }
         }
         return

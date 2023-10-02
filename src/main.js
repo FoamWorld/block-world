@@ -15,10 +15,10 @@ var started, // 已开始
     guix, guiy, // 当前 GUI 坐标 [无: guix=NaN]
     nit // 打开的物品 GUI [无: nit=null]
 // 初始化
-bimgs["dig0"] = srcimg("data/gui/dig0.png")
-bimgs["dig1"] = srcimg("data/gui/dig1.png")
-bimgs["dig2"] = srcimg("data/gui/dig2.png")
-bimgs["notexture"] = srcimg("assets/images/notexture.png")
+bimgs["dig0"] = srcimg("dig0.png")
+bimgs["dig1"] = srcimg("dig1.png")
+bimgs["dig2"] = srcimg("dig2.png")
+bimgs["notexture"] = srcimg("notexture.png")
 if (localStorage.getItem("%setting") != null) setting = JSON.parse(localStorage.getItem("%setting"))
 else setting = {
     "auto_save": true,
@@ -218,8 +218,9 @@ function press_i() {
 }
 
 function mousemove(e) {
-    mousex = e.layerX
-    mousey = e.layerY
+    console.log(e)
+    mousex = e.offsetX
+    mousey = e.offsetY
     if (pause) return
     if (!(Number.isNaN(mousex) || Number.isNaN(mousey)) && localsetting["focus_mouse"]) {
         ply.θ = Math.atan2(mousex - 240, 240 - mousey)
@@ -230,7 +231,7 @@ function mouseleave() {
 }
 function mousedown(e) {
     if (pause) return
-    var t = pos_by_showpos(e.layerX, e.layerY)
+    var t = pos_by_showpos(e.offsetX, e.offsetY)
     if (!ply.reachable(t.a, t.b)) return
     tempx = t.a
     tempy = t.b
@@ -285,7 +286,7 @@ function mousedown(e) {
 }
 function mouseup(e) {
     if (mouseup_done == 3) return
-    var t = pos_by_showpos(e.layerX, e.layerY)
+    var t = pos_by_showpos(e.offsetX, e.offsetY)
     if (t.a != tempx || t.b != tempy) { // 我看看谁会激活这玩意
         mouseup_done = 1
         info_help("不要边点边移")
@@ -333,12 +334,12 @@ function closeguis() {
     inputting2 = false
 }
 function resize() {
-    if (curpage == "game") {
+    /* if (curpage == "game") {
         let x = document.body.clientWidth
         let m = x >> 1
         gid("draw").style.left = (m - 240) + "px"
         gid("itms").style.left = (m - 240) + "px"
-    }
+    } */
 }
 // 存储
 function savegame() {

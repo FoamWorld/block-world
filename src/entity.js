@@ -6,7 +6,7 @@ class Entity {
         this.vy = vy
     }
 }
-var pimg = srcimg("assets/images/skin_default.png")
+var pimg = srcimg("skin_default.png")
 var plylx, plyly, plybx, plyby
 class Player {
     constructor(x, y, θ = 0, h = 20, its = new IB(8)) {
