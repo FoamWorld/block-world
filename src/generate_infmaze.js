@@ -1,3 +1,12 @@
+/*
+Chunk.prototype.setblk2 = function (x, y, sz, block) {
+    for (let i = 0; i < sz; i++) {
+        for (let j = 0; j < sz; j++) {
+            this.blk[x * sz + i, y * sz + j] = block
+        }
+    }
+}
+*/
 Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割（原因：直线多）
     let x0 = rx - lx, y0 = ry - ly
     if (x0 == 0 || y0 == 0) {
@@ -46,12 +55,15 @@ Chunk.prototype.generate__infmaze = function (x, y) {
     srand = (x << 15 + y) ^ localsetting["seed"] << 3
     this.generate__infmaze_4(1, 1, 63, 63)
     // 区块相连
-    let r1 = rand() % 32
-    let decision = r1 < 16 && (x ^ 2 + y ^ 2) > 25
+    let decision = rand() % 2 == 0
     let content = decision ? new 空气() : new 箱子(new IB(16))
+    let dist = x ^ 2 + y ^ 2
     if (!decision) {
-        content.give(new IFB(new 树苗(0)), rand() % 4 + 1)
-        content.give(new 桶(rand() % 3), 1)
+        if (dist <= 5) {
+            content.give(new IFB(new 树苗(0)), rand() % 4 + 1)
+            content.give(new 桶(rand() % 3), 1)
+            content.give(new 锭(new 铁(), rand() % 8 + 1))
+        }
     }
     this.blk[2 * (rand() % 32) + 1][0] = content
     this.blk[0][2 * (rand() % 32) + 1] = decision ? new 玻璃() : new 空气()

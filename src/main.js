@@ -156,7 +156,14 @@ function press(e) {
         }
         return
     }
-    if (pause) return
+    if (pause) {
+        if (k == "e" && localsetting["inf-item"]) {
+            nit = inf_itemer
+            nit.onuse()
+        }
+
+        return
+    }
     let c = e.ctrlKey
     if ((k >= "1" && k <= "8") && !c) ply.changechosen(k - '1')
     else {

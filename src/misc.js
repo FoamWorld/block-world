@@ -115,6 +115,7 @@ function insertsto(b, d) {
 }
 // 杂物
 function envlight() {
+    // todo: 关闭时间变化
     // 当前 0.1s 一帧，设计一昼夜 16384 帧，即 [27min 18.4s]
     let t = localsetting["t"] & 16383
     // round(sin(t/8192*π)*8+7.5)

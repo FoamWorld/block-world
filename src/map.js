@@ -229,3 +229,12 @@ function makeblk(x, y, o, pue = false) {
     if (pue) ch.blk[tx][ty].putextra(x, y)
     pushsave(lx, ly, tx, ty, o)
 }
+function issurrounded(x, y) {
+    for (let rx = -1; rx <= 1; rx++) {
+        for (let ry = -1; ry <= 1; ry++) {
+            if (rx == 0 && ry == 0) continue
+            if (ndim.blk[x + rx, y + ry] instanceof 空气) return false
+        }
+    }
+    return true
+}
