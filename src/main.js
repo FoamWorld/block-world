@@ -102,12 +102,7 @@ function append_feature() {
     if (!started) return
     let zbox = gid("zbox")
     if (inputting2) {
-        inputting2 = false
-        if (nit != null) { nit.onunuse(); nit = undefined }
-        if (!Number.isNaN(guix)) ndim.blk(guix, guiy).onguiclose()
-        let zbox = gid("zbox")
-        zbox.replaceChildren()
-        zbox.classList.replace("status-gui", "status-hidden")
+        closeguis()
         gid("append").innerText = "+"
     }
     else if (inputting) {
@@ -182,6 +177,7 @@ function press_a() { ply.move(-ply.stepl(), 0) }
 function press_s() { ply.move(0, ply.stepl()) }
 function press_d() { ply.move(ply.stepl(), 0) }
 function press_e() {
+    close_itemuse()
     if (Number.isNaN(mousex) || Number.isNaN(mousey)) {
         if (localsetting["inf-item"]) {
             nit = inf_itemer
@@ -195,30 +191,32 @@ function press_e() {
         if (!ply.reachable(p.a, p.b)) return
         guix = p.a
         guiy = p.b
-        if (nit !== null) { nit.onunuse(); nit = null }
         t.onguiopen()
     }
 }
 function press_f() {
-    closeguis()
-    if (nit !== null) { nit.onunuse(); nit = null }
+    close_itemuse()
     let t = ply.its.i[localsetting["chosen_itm"]]
     if (t.constructor.canuse) {
         if (!t.constructor.useonce) nit = t
         t.onuse()
     }
 }
+function press_q() {
+    close_itemuse()
+    ply.its.remove(localsetting["chosen_itm"])
+    ply.updategui()
+}
 function press_i() {
-    info_log(`时间${localsetting["t"] & 16383}`, "help")
+    info_log(`时间 ${localsetting["t"] & 16383}`, "help")
     if (!(Number.isNaN(mousex) || Number.isNaN(mousey))) {
         let t = pos_by_showpos(mousex, mousey)
-        info_log(`指向(${t.a},${t.b})`, "help")
+        info_log(`指向坐标 (${t.a}, ${t.b})`, "help")
     }
-    info_log(`玩家(${ply.x},${ply.y})`, "help")
+    info_log(`玩家坐标 (${ply.x}, ${ply.y})`, "help")
 }
 
 function mousemove(e) {
-    console.log(e)
     mousex = e.offsetX
     mousey = e.offsetY
     if (pause) return
@@ -318,6 +316,12 @@ function closebgui() {
     let zbox = gid("zbox")
     zbox.replaceChildren()
     zbox.classList.replace("status-gui", "status-hidden")
+}
+function close_itemuse() {
+    if (nit !== null) {
+        nit.onunuse()
+        nit = null
+    }
 }
 function closeguis() {
     if (!Number.isNaN(guix)) {

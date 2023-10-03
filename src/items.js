@@ -136,32 +136,27 @@ class 书 extends Item {
     constructor(c = [""], p = 0) { super(); this.c = c; this.p = p }
     onuse() {
         let gui = zbox_gui2()
-        gui.innerHTML = `
-<textarea id='book-page' maxlength='1000' style="width:100%" onselect='select_diarypage()' type='text' rows='20' cols='80'></textarea>
-<p id='book-page-num'></p>
-<button onclick='nit.firstpage()'>&lt;&lt;</button>
-<button onclick='nit.prevpage()'>&lt;</button>
-<button onclick='nit.delpage()'>-</button>
-<button onclick='nit.clear()'>0</button>
-<button onclick='nit.newpage()'>+</button>
-<button onclick='nit.nextpage()'>&gt;</button>
-<button onclick='nit.lastpage()'>&gt;&gt;</button>`
+        let text_area = createQElement("textarea", { id: "book-page", className: "textarea-ink", type: "text", maxlength: "1000", rows: "15", cols: "80" })
+        let num_area = createQElement("p", { id: "book-page-num" })
+        gui.append(text_area, num_area)
+        for (let vec of [["|&lt;", "first"], ["&lt;", "prev"], ["-", "del"], ["0", "clear"], ["+", "new"], ["&gt;", "next"], ["&gt;|", "last"]]) {
+            gui.innerHTML += `<button onclick='nit._${vec[1]}()'>${vec[0]}</button>`
+        }
         this.updategui()
-        inputting2 = true
     }
-    onunuse() { this.savepage(); inputting2 = false }
+    onunuse() { this.c[this.p] = gid("book-page").value }
     updategui() {
         gid("book-page").value = this.c[this.p]
         gid("book-page-num").innerText = (this.p + 1) + "/" + this.c.length
     }
-    savepage() { this.c[this.p] = gid("book-page").value }
-    newpage() { this.savepage(); this.c.splice(this.p + 1, 0, ""); this.updategui() }
-    firstpage() { this.savepage(); this.p = 0; this.updategui() }
-    lastpage() { this.savepage(); this.p = this.c.length - 1; this.updategui() }
-    prevpage() { this.savepage(); this.p = (this.p == 0 ? 0 : this.p - 1); this.updategui() }
-    nextpage() { this.savepage(); this.p = (this.p == this.c.length - 1 ? this.p : this.p + 1); this.updategui() }
-    clear() { this.c = [""]; this.p = 0; this.updategui() }
-    delpage() {
+    _save() { this.c[this.p] = gid("book-page").value }
+    _new() { this._save(); this.c.splice(this.p + 1, 0, ""); this.updategui() }
+    _first() { this._save(); this.p = 0; this.updategui() }
+    _last() { this._save(); this.p = this.c.length - 1; this.updategui() }
+    _prev() { this._save(); this.p = (this.p == 0 ? 0 : this.p - 1); this.updategui() }
+    _next() { this._save(); this.p = (this.p == this.c.length - 1 ? this.p : this.p + 1); this.updategui() }
+    _clear() { this.c = [""]; this.p = 0; this.updategui() }
+    _del() {
         if (this.c.length == 1) this.c[0] = ""
         else this.c.splice(this.p, 1)
         if (this.p == this.c.length) this.p--

@@ -34,6 +34,9 @@ function intend_open_sl_upd() {
         tr.append(
             createQElement("td", { innerText: i }),
             createQElement("td", { innerText: "载入", className: "tech-clickable", onclick: function () { load_saved(i) } }),
+            createQElement("td", { innerText: "重命名", className: "tech-clickable", onclick: function() {
+                // todo
+            } }),
             createQElement("td", { innerText: "删除", className: "tech-clickable", onclick: function () { intend_open_sl_del(i) } }),
         )
         list.append(tr)

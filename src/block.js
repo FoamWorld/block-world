@@ -57,7 +57,6 @@ class Block {
             }
         }
     }
-    elec() { }
     t_mat() { return this.mat /* 无=>undefined */ }
 }
 /*
@@ -87,7 +86,6 @@ class Block {
     begin(x,y) 产生时所为
     end(x,y) 消失时所为
     putextra(x,y) 放置时额外所为
-    elec(data) 收到电信号所为
 事件属性
     onguiopen() 打开GUI
     updategui() GUI更新
@@ -343,7 +341,20 @@ class 藤蔓 extends Solid {
                 this.tmp = 1
             }
         }
-        return
+    }
+}
+class Bomb extends Solid {
+    update(x, y) {
+        for (let rx = -2; rx <= 2; rx++) {
+            for (let ry = -2; ry <= 2; ry++) {
+                if (rx == 0 && ry == 0) continue
+                let b = ndim.blk(x + rx, y + ry)
+                if (!(b instanceof 空气) && !(b instanceof 星岩)) {
+                    makeblk(x + rx, y + ry, new 空气())
+                }
+            }
+        }
+        makeblk(x, y, new 空气())
     }
 }
 class 结构方块 extends Solid {
@@ -593,7 +604,8 @@ class 块 extends Solid {
     show(x, y) {
         let im = bimgs[this.id()]
         if (im === undefined) {
-            draw.fillStyle = this.mat.constructor.theme
+            let theme = this.mat.constructor.theme
+            draw.fillStyle = `rgb(${theme[0]},${theme[1]},${theme[2]})`
             draw.fillRect(x, y, 32, 32)
         }
         else draw.drawImage(im, x, y, 32, 32)
@@ -601,7 +613,8 @@ class 块 extends Solid {
     showita(d) {
         let im = bimgs[this.id()]
         if (im === undefined) {
-            d.fillStyle = this.mat.constructor.theme
+            let theme = this.mat.constructor.theme
+            d.fillStyle = `rgb(${theme[0]},${theme[1]},${theme[2]})`
             d.fillRect(0, 0, 32, 32)
         }
         else d.drawImage(im, 0, 0, 32, 32)
@@ -610,10 +623,6 @@ class 块 extends Solid {
 class 电池块 extends Solid {
     hard() { return 45 }
     update(x, y) {
-        for (let i = 0; i < 3; i++) {
-            let x0 = direx[i], y0 = direy[i]
-            ndim.blk(x + x0, y + y0).elec(i << 7 | 7)
-        }
     }
 }
 class 导线 extends 类导线 {
