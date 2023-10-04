@@ -75,7 +75,7 @@ class Chunk { // 区块：64x64
                 let x0 = Math.round((i - lx + px) * bsz), y0 = Math.round((j - ly + py) * bsz)
                 let b = this.blk[i][j]
                 if (tl == 0) {
-                    draw.fillStyle = "#000000"
+                    draw.fillStyle = "#000"
                     draw.fillRect(x0, y0, bsz, bsz)
                     continue
                 }

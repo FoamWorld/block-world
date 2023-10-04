@@ -354,6 +354,7 @@ class 藤蔓 extends Solid {
 class 藤蔓核心 extends Solid {
     constructor() { super(); this.tmp = 1 }
     hard() { return 5 }
+    show() { }
     update(x, y) {
         let rndstore = grand()
         let rx = (rndstore % 3) - 1;
@@ -373,6 +374,10 @@ class 藤蔓核心 extends Solid {
     }
 }
 class Bomb extends Solid {
+    show(x, y) {
+        draw.fillStyle = "#fff"
+        draw.fillRect(x, y, 32, 32)
+    }
     update(x, y) {
         for (let rx = -2; rx <= 2; rx++) {
             for (let ry = -2; ry <= 2; ry++) {
@@ -384,6 +389,26 @@ class Bomb extends Solid {
             }
         }
         makeblk(x, y, new 空气())
+    }
+}
+class 海绵 extends Solid {
+    constructor() { super(); this.life = 0 }
+    hard() { return 5 }
+    update(x, y) {
+        const limit = 50
+        if (this.life < limit) {
+            let chance = this.life * 10000 / limit + 500
+            for (let rx = -1; rx <= 1; rx++) {
+                for (let ry = -1; ry <= 1; ry++) {
+                    if (rx == 0 && ry == 0) continue
+                    let b = ndim.blk(x + rx, y + ry)
+                    if ((b instanceof 水) && b.depth == 3 && grand() % chance < 500) {
+                        this.life++
+                        makeblk(x + rx, y + ry, new 空气())
+                    }
+                }
+            }
+        }
     }
 }
 class 结构方块 extends Solid {
