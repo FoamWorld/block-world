@@ -143,7 +143,7 @@ function press(e) {
         }
         return
     }
-    if (k == " ") {
+    if (k == " ") { // todo: 防止触发无障碍功能
         if (pause) {
             info_event("已恢复 [space]")
             pause = false
@@ -305,7 +305,7 @@ function userfill(x, y) {
     if (b !== null) {
         makeblk(x, y, b, true)
         if (!localsetting["inf-item"]) {
-            ply.its.i.reduce(localsetting["chosen_itm"], 1)
+            ply.its.reduce(localsetting["chosen_itm"], 1)
             ply.updategui()
         }
     }
@@ -313,6 +313,9 @@ function userfill(x, y) {
 }
 function userdestroy(x, y) {
     if (guix == x && guiy == y) closebgui()
+    if (!localsetting["break-all"]) { // todo: 掉落物
+        ply.its.give(new IFB(ndim.blk(x, y)), 1)
+    }
     makeblk(x, y, new 空气())
     mouseup_done = 3
 }

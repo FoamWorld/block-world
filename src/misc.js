@@ -34,6 +34,9 @@ function grand() {
     gsrand = (gsrand * 1103515245 + 12345) & 0xffffffff
     return gsrand >> 16 & 32767
 }
+function gchance(num, den) {
+    return grand() % den < num
+}
 // 更好地求余
 function rem(n, p) {
     var t = n % p
@@ -82,11 +85,15 @@ function gid(s) {
 }
 // 信息区 api
 var eventstack = []
+function info_alert(important) {
+    // todo: number + color
+}
 function info_log(s, smode = "system") {
     let e = gid("events")
-    if (e == null){
+    if (e == null) {
         eventstack.push(new Pair(smode, s))
-        return // alert [blue, red]
+        info_alert(smode == "error")
+        return
     }
     e.append(createQElement("div", { className: `message-box ${smode}-speak`, innerHTML: s }))
 }
@@ -115,7 +122,6 @@ function insertsto(b, d) {
 }
 // 杂物
 function envlight() {
-    // todo: 关闭时间变化
     // 当前 0.1s 一帧，设计一昼夜 16384 帧，即 [27min 18.4s]
     let t = localsetting["t"] & 16383
     // round(sin(t/8192*π)*8+7.5)
@@ -200,6 +206,7 @@ class IB { // 简易物品栏管理器
         else this.i[id] = new EI()
     }
     give(it, n) {
+        if (n == 0) return
         let last = n
         let st = it.constructor.stack
         let itid = it.id()

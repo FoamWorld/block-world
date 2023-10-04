@@ -55,17 +55,23 @@ Chunk.prototype.generate__infmaze = function (x, y) {
     srand = (x << 15 + y) ^ localsetting["seed"] << 3
     this.generate__infmaze_4(1, 1, 63, 63)
     // 区块相连
-    let decision = rand() % 2 == 0
+    let decision = localsetting["plain"] == true
     let content = decision ? new 空气() : new 箱子(new IB(16))
-    let dist = x ^ 2 + y ^ 2
     if (!decision) {
+        let dist = x ^ 2 + y ^ 2
         if (dist <= 5) {
-            content.give(new IFB(new 树苗(0)), rand() % 4 + 1)
+            content.give(new IFB(new 树苗(0)), Number(gchance(1, 3)) + 1)
             content.give(new 桶(rand() % 3), 1)
-            content.give(new 锭(new 铁(), rand() % 8 + 1))
+            content.give(new 木板(0), rand() % 4 + 2)
+            content.give(new 锭(new 铁()), rand() % 5)
+            content.give(new 锭(new 铜()), Number(gchance(1, 7)))
+        }
+        else {
+            content.give(new 藤蔓核心(), 1)
+            content.give(new 萤石(), rand() % 3)
         }
     }
     this.blk[2 * (rand() % 32) + 1][0] = content
-    this.blk[0][2 * (rand() % 32) + 1] = decision ? new 玻璃() : new 空气()
+    this.blk[0][2 * (rand() % 32) + 1] = new 空气()
 }
 function initgen__infmaze() { ply = new Player(1.5, 1.5) }

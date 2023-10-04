@@ -67,7 +67,7 @@ function work_command(s) {
         t.shift(1)
         let cnc = globalThis["cmd_" + cn]
         if (cnc == undefined) {
-            throw new Error("未知指令" + cn)
+            throw new Error(`未知指令 "${cn}"`)
         }
         else cnc.call(null, ...t)
     }
