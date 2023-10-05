@@ -66,7 +66,7 @@ function inner_craft(its, lin = 3, col = 3) {
             }
         }
         if (fl) continue
-        return new Pair(c[2], c[3] === undefined ? 1 : c[3])
+        return pair(c[2], c[3] === undefined ? 1 : c[3])
     }
     return null
 }

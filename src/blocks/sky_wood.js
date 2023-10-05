@@ -4,6 +4,7 @@ class sky_log extends Solid {
 class sky_leaf extends NotSolid {
 	static bk = false
 	hard() { return 15 }
+	drop() { return [pair(new IFB(new sky_sapling()), grand() % 2)] }
 }
 class sky_sapling extends NotSolid {
 	static bk = false
@@ -11,7 +12,10 @@ class sky_sapling extends NotSolid {
 	hard() { return 15 }
 	update(x, y) {
 		let rndstore = grand()
-		if (rndstore >= 8) return
+		if (rndstore < 8)
+			this._grow(x, y)
+	}
+	_grow(x, y) {
 		let cx1 = isair(ndim.blk(x + 1, y)) && isair(ndim.blk(x + 2, y)),
 			cx2 = isair(ndim.blk(x - 1, y)) && isair(ndim.blk(x - 2, y)),
 			cx = cx1 && cx2
@@ -19,7 +23,7 @@ class sky_sapling extends NotSolid {
 			cy2 = isair(ndim.blk(x, y - 1)) && isair(ndim.blk(x, y - 2)),
 			cy = cy1 && cy2
 		if (!cx && !cy) return
-		let d = (cx && cy) ? rndstore % 2 : cx ? 0 : 1
+		let d = (cx && cy) ? grand() % 2 : cx ? 0 : 1
 		let l = 0, r = 0
 		if (d == 0) { // 横
 			if (cx1) {

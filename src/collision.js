@@ -85,15 +85,15 @@ class CircleCollisionBox {
             // 原则：保证不碰撞（总碰撞则不动）
             if (t.collide_with_blks(s)) {
                 if (max_depth == 0) {
-                    if (anx == 0 && any == 0) return new Pair(0, 0) // 一直碰撞
-                    else return new Pair(anx, any) // 回退到上一次不碰撞
+                    if (anx == 0 && any == 0) return pair(0, 0) // 一直碰撞
+                    else return pair(anx, any) // 回退到上一次不碰撞
                 }
                 rx = mx
                 ry = my
             }
             else {
                 if (max_depth == 0) {
-                    return new Pair(mx, my)
+                    return pair(mx, my)
                 }
                 anx = mx
                 any = my

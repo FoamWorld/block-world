@@ -33,7 +33,7 @@ function antiwpos(s) {
         y = y * 10 + (c - 48)
     }
     if (neg) y = -y
-    return new Pair(x, y)
+    return pair(x, y)
 }
 
 class Chunk { // 区块：64x64
@@ -168,13 +168,13 @@ class Dimension {
     }
 }
 function pos_by_showpos(x, y) {
-    return new Pair(Math.floor(x / bsz - 7.5 + ply.x), Math.floor(y / bsz - 7.5 + ply.y))
+    return pair(Math.floor(x / bsz - 7.5 + ply.x), Math.floor(y / bsz - 7.5 + ply.y))
 }
 function blk_by_showpos(x, y) {
     return ndim.blk(Math.floor(x / bsz - 7.5 + ply.x), Math.floor(y / bsz - 7.5 + ply.y))
 }
 function showpos_by_pos(x, y) {
-    return new Pair(Math.floor((x - ply.x + 7.5) * bsz), Math.floor((y - ply.y + 7.5) * bsz))
+    return pair(Math.floor((x - ply.x + 7.5) * bsz), Math.floor((y - ply.y + 7.5) * bsz))
 }
 
 function initdim() {
@@ -219,11 +219,12 @@ function updategame() {
         }
     }
 }
-function makeblk(x, y, o, pue = false) {
+function makeblk(x, y, o, force = true, pue = false) {
     var tx = x & 63, ty = y & 63
     var lx = x - tx, ly = y - ty
     let ch = ndim.chk(lx, ly)
     ch.blk[tx][ty].onend(x, y)
+    if (!force) ch.blk[tx][ty].onbroken(x, y, null)
     ch.blk[tx][ty] = o
     ch.blk[tx][ty].onbegin(x, y)
     if (pue) ch.blk[tx][ty].putextra(x, y)

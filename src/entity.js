@@ -66,7 +66,6 @@ class Player {
     }
     give(i, n = 1) {
         this.its.give(i, n)
-        this.updategui()
     }
     reachable(x, y) {
         if (localsetting["reach-all"]) return true

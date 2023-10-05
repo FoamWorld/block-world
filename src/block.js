@@ -5,6 +5,9 @@ class Block {
     static hasgui = false
     static hastrans = false
     static tr = false
+    static isBurnable = false
+    static isConductable = false
+    static isWood = false
     id() { return this.t === undefined ? this.constructor.name : this.constructor.name + this.t }
     text() { return textof(localsetting["l"], this.id()) }
     imgsource() {
@@ -17,16 +20,18 @@ class Block {
         d.drawImage(this.imgsource(), 0, 0, bsz, bsz)
     }
     light() { return 0 }
-    begin() { }
-    end() { }
     putextra() { }
     update() { }
     onguiclose() { }
-    onbegin(x, y) {
-        this.begin(x, y)
+    onbegin(x, y) { }
+    drop(args) { return [pair(new IFB(this), 1)] }
+    onbroken(x, y, args) {
+        // todo: 掉落物
+        let list = this.drop(args)
+        for (let pa of list)
+            ply.give(pa.a, pa.b)
     }
     onend(x, y) {
-        this.end(x, y)
         if (this.hasgui && guix == x && guiy == y) {
             this.onguiclose(x, y)
             info_help("打开的交互方块被摧毁")
@@ -64,6 +69,9 @@ class Block {
     bk 挖掘时视作背景
     hasgui 具有gui
     hastrans 贴图具有透明部分
+    isBurnable
+    isConductable
+    isWood
     tr 光照系统中可透光（应包括发光体）
 变量
     t 一类中的编号
@@ -83,8 +91,6 @@ class Block {
     isbackground() 是否视作背景
     updategui() 更新GUI
     update(x,y) 更新
-    begin(x,y) 产生时所为
-    end(x,y) 消失时所为
     putextra(x,y) 放置时额外所为
 事件属性
     onguiopen() 打开GUI
@@ -95,8 +101,6 @@ class Block {
 转化属性
     t_mat() 成为材料
 */
-// +burnable
-// +conductable
 class Solid extends Block { // 【固体】，通常指碰撞箱为整的物质
     static bk = false
     colbox(x, y) { return new BCollisionBox(x, y, x + 1, y + 1) }
@@ -281,7 +285,7 @@ class 藤蔓 extends Solid {
                 if (r instanceof 水) {
                     if (grand() % 50 == 0) makeblk(x, y, new 藤蔓(0))
                 }
-                else if (r instanceof 原木) { // todo: 原木 tag
+                else if (r.isWood) {
                     let rndstore = grand()
                     if (rndstore % 4 != 0 || this.tmp != 1) continue
                     rndstore >>= 3

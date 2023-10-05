@@ -28,39 +28,39 @@ function drop(e) {
     let f2 = clone(ref_get[drag_to](drag_to))
     if (f2.a instanceof EI) {
         if (ref_type[drag_from] == "i") {
-            if (e.ctrlKey) ref_set[drag_to](drag_to, new Pair(f1.a, f1.a.constructor.stack))
-            else ref_set[drag_to](drag_to, new Pair(f1.a, 1))
+            if (e.ctrlKey) ref_set[drag_to](drag_to, pair(f1.a, f1.a.constructor.stack))
+            else ref_set[drag_to](drag_to, pair(f1.a, 1))
         }
         else {
             if (e.ctrlKey) { // 分半
                 let mi = f1.b >> 1
-                ref_set[drag_from](drag_from, new Pair(mi == 0 ? new EI() : f1.a, mi))
-                ref_set[drag_to](drag_to, new Pair(clone(f1.a), f1.b - mi))
+                ref_set[drag_from](drag_from, pair(mi == 0 ? new EI() : f1.a, mi))
+                ref_set[drag_to](drag_to, pair(clone(f1.a), f1.b - mi))
             }
             else if (e.shiftKey) { // 分一
                 if (f1.b == 1) return
-                ref_set[drag_from](drag_from, new Pair(f1.a, 1))
-                ref_set[drag_to](drag_to, new Pair(clone(f1.a), f1.b - 1))
+                ref_set[drag_from](drag_from, pair(f1.a, 1))
+                ref_set[drag_to](drag_to, pair(clone(f1.a), f1.b - 1))
             }
             else { // 移动
-                ref_set[drag_from](drag_from, new Pair(new EI(), 0))
-                ref_set[drag_to](drag_to, new Pair(f1.a, f1.b))
+                ref_set[drag_from](drag_from, pair(new EI(), 0))
+                ref_set[drag_to](drag_to, pair(f1.a, f1.b))
             }
         }
     }
     else if (f1.a.id() == f2.a.id()) { // 相同叠加
         let st = f2.a.constructor.stack
         if (st == f2.b) return
-        if (ref_type[drag_from] == "i") ref_set[drag_to](drag_to, new Pair(f2.a, f2.b + 1))
+        if (ref_type[drag_from] == "i") ref_set[drag_to](drag_to, pair(f2.a, f2.b + 1))
         else {
             let sum = f1.b + f2.b
             if (sum > st) {
-                ref_set[drag_from](drag_from, new Pair(f1.a, sum - st))
-                ref_set[drag_to](drag_to, new Pair(f2.a, st))
+                ref_set[drag_from](drag_from, pair(f1.a, sum - st))
+                ref_set[drag_to](drag_to, pair(f2.a, st))
             }
             else {
-                ref_set[drag_from](drag_from, new Pair(new EI(), 0))
-                ref_set[drag_to](drag_to, new Pair(f1.a, sum))
+                ref_set[drag_from](drag_from, pair(new EI(), 0))
+                ref_set[drag_to](drag_to, pair(f1.a, sum))
             }
         }
     }
@@ -169,21 +169,19 @@ class 桶 extends Item {
     static useonce = true
     constructor(t = 0) { super(); this.t = t }
     onuse() {
-        if (Number.isNaN(mousex)) return
+        if (Number.isNaN(mousex) || Number.isNaN(mousey)) return
         let t = pos_by_showpos(mousex, mousey)
         let b = ndim.blk(t.a, t.b)
         if (this.t == 0) {
             if (b instanceof 水) {
                 if (!localsetting["inf-use"]) {
                     this.t = 1
-                    ply.updategui()
                 }
                 makeblk(t.a, t.b, new 空气())
             }
             else if (b instanceof 岩浆) {
                 if (!localsetting["inf-use"]) {
                     this.t = 2
-                    ply.updategui()
                 }
                 makeblk(t.a, t.b, new 空气())
             }
@@ -193,12 +191,22 @@ class 桶 extends Item {
             else if (this.t == 2) makeblk(t.a, t.b, new 岩浆())
             if (!localsetting["inf-use"]) {
                 this.t = 0
-                ply.updategui()
             }
         }
     }
 }
 class 木棍 extends Item { }
+class grow_powder extends Item {
+    static canuse = true
+    onuse() {
+        if (Number.isNaN(mousex) || Number.isNaN(mousey)) return
+        let t = pos_by_showpos(mousex, mousey)
+        let b = ndim.blk(t.a, t.b)
+        if ((b instanceof sky_sapling) && gchance(1, 3)) {
+            b._grow(t.a, t.b)
+        }
+    }
+}
 class 无限物品表 extends Item {
     static canuse = true
     static stack = 1
@@ -240,7 +248,7 @@ class 无限物品表 extends Item {
         for (let i = 0; i < l; i++) {
             let d = gid(i).getContext("2d")
             pre[i].showit(d)
-            eval(`ref_get[i]=function(x){return new Pair(localtemp["gui"]["p"][x],1)}`)
+            eval(`ref_get[i]=function(x){return pair(localtemp["gui"]["p"][x],1)}`)
             ref_type[i] = "i"
         }
     }

@@ -80,6 +80,7 @@ function clone(obj) {
 class Pair {
     constructor(a, b) { this.a = a; this.b = b }
 }
+function pair(a, b) { return new Pair(a, b) }
 function gid(s) {
     return document.getElementById(s)
 }
@@ -91,7 +92,7 @@ function info_alert(important) {
 function info_log(s, smode = "system") {
     let e = gid("events")
     if (e == null) {
-        eventstack.push(new Pair(smode, s))
+        eventstack.push(pair(smode, s))
         info_alert(smode == "error")
         return
     }
@@ -163,7 +164,7 @@ class IB { // 简易物品栏管理器
         (id & 1) == 0 ? this.n[id >> 1] = this.n[id >> 1] & 15 | (x << 4) : this.n[id >> 1] = this.n[id >> 1] & 240 | x
     }
     get(id) {
-        return new Pair(this.i[id], this.getn(id))
+        return pair(this.i[id], this.getn(id))
     }
     set(id, v) {
         this.i[id] = v.a

@@ -91,6 +91,7 @@ function tick() {
     pregenerate()
     showgame()
     updategame()
+    ply.updategui()
     if (localsetting["tmove"]) localsetting["t"]++
 }
 function tick_manager() {
@@ -212,7 +213,6 @@ function press_f() {
 function press_q() {
     close_itemuse()
     ply.its.remove(localsetting["chosen_itm"])
-    ply.updategui()
 }
 function press_i() {
     info_log(`时间 ${localsetting["t"] & 16383}`, "help")
@@ -303,20 +303,16 @@ function userfill(x, y) {
     var i = ply.its.i[localsetting["chosen_itm"]]
     let b = i.formblock()
     if (b !== null) {
-        makeblk(x, y, b, true)
+        makeblk(x, y, b, true, true)
         if (!localsetting["inf-item"]) {
             ply.its.reduce(localsetting["chosen_itm"], 1)
-            ply.updategui()
         }
     }
     mouseup_done = 3
 }
 function userdestroy(x, y) {
     if (guix == x && guiy == y) closebgui()
-    if (!localsetting["break-all"]) { // todo: 掉落物
-        ply.its.give(new IFB(ndim.blk(x, y)), 1)
-    }
-    makeblk(x, y, new 空气())
+    makeblk(x, y, new 空气(), localsetting["break-all"])
     mouseup_done = 3
 }
 // UI
