@@ -5,9 +5,9 @@ class Block {
     static hasgui = false
     static hastrans = false
     static tr = false
-    static isBurnable = false
-    static isConductable = false
-    static isWood = false
+    get isBurnable() { return false }
+    get isConductable() { return false }
+    get isWood() { return true }
     id() { return this.t === undefined ? this.constructor.name : this.constructor.name + this.t }
     text() { return textof(localsetting["l"], this.id()) }
     imgsource() {
@@ -269,6 +269,7 @@ class 半砖 extends Block { // 0为上面那块，之后顺时针旋转
 }
 class 木板 extends Solid {
     constructor(t) { super(); this.t = t }
+    get isBurnable() { return true }
     show(x, y) { draw.drawImage(bimgs["木板" + this.t], x, y, bsz, bsz) }
     hard() { return 25 }
     t_mat() { if (this.t == 0) return new 苍穹木() }
@@ -276,6 +277,7 @@ class 木板 extends Solid {
 class 藤蔓 extends Solid {
     constructor(tmp = 0) { super(); this.tmp = tmp }
     hard() { return 5 }
+    get isBurnable() { return true }
     update(x, y) {
         if (this.tmp == 1 && issurrounded(x, y)) this.tmp == 0
         for (let rx = -1; rx <= 1; rx++) {
@@ -304,6 +306,7 @@ class 藤蔓 extends Solid {
 class 藤蔓核心 extends Solid {
     constructor() { super(); this.tmp = 1 }
     hard() { return 5 }
+    get isBurnable() { return true }
     show() { }
     update(x, y) {
         let rndstore = grand()
@@ -334,11 +337,11 @@ class Bomb extends Solid {
                 if (rx == 0 && ry == 0) continue
                 let b = ndim.blk(x + rx, y + ry)
                 if (!isair(b) && !(b instanceof 星岩)) {
-                    makeblk(x + rx, y + ry, new 空气())
+                    makeblk(x + rx, y + ry)
                 }
             }
         }
-        makeblk(x, y, new 空气())
+        makeblk(x, y)
     }
 }
 class 海绵 extends Solid {
@@ -354,7 +357,7 @@ class 海绵 extends Solid {
                     let b = ndim.blk(x + rx, y + ry)
                     if ((b instanceof 水) && b.depth == 3 && grand() % chance < 500) {
                         this.life++
-                        makeblk(x + rx, y + ry, new 空气())
+                        makeblk(x + rx, y + ry)
                     }
                 }
             }
@@ -444,6 +447,7 @@ class 告示牌 extends NotSolid {
     static hasgui = true
     static hastrans = true
     constructor(s = "", c = "#000") { super(); this.s = s; this.c = c }
+    get isBurnable() { return true }
     show(x, y) {
         draw.drawImage(bimgs["告示牌"], x, y, bsz, bsz)
         show_after.push(`draw.fillStyle="${this.c}";draw.font="16px";draw.fillText("${this.s}",${x + 2},${y + 18})`)
@@ -461,6 +465,7 @@ class 告示牌 extends NotSolid {
 class 合成台 extends Solid {
     static hasgui = true
     hard() { return 25 }
+    get isBurnable() { return true }
     onguiopen() {
         let gui = zbox_gui2()
         localtemp.i = new IB(10)

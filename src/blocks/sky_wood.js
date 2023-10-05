@@ -1,14 +1,19 @@
 class sky_log extends Solid {
+	get isBurnable() { return true }
+	get isWood() { return true }
 	hard() { return 25 }
 }
 class sky_leaf extends NotSolid {
 	static bk = false
+	get isBurnable() { return true }
 	hard() { return 15 }
 	drop() { return [pair(new IFB(new sky_sapling()), grand() % 2)] }
 }
 class sky_sapling extends NotSolid {
 	static bk = false
 	static hastrans = true
+	get isBurnable() { return true }
+	get isWood() { return true }
 	hard() { return 15 }
 	update(x, y) {
 		let rndstore = grand()
