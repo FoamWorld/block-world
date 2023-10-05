@@ -233,7 +233,7 @@ function issurrounded(x, y) {
     for (let rx = -1; rx <= 1; rx++) {
         for (let ry = -1; ry <= 1; ry++) {
             if (rx == 0 && ry == 0) continue
-            if (ndim.blk[x + rx, y + ry] instanceof 空气) return false
+            if (isair(ndim.blk[x + rx, y + ry])) return false
         }
     }
     return true

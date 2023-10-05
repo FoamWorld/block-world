@@ -188,7 +188,7 @@ class 桶 extends Item {
                 makeblk(t.a, t.b, new 空气())
             }
         }
-        else if (b instanceof 空气 && ply.reachable(t.a, t.b)) {
+        else if (isair(b) && ply.reachable(t.a, t.b)) {
             if (this.t == 1) makeblk(t.a, t.b, new 水())
             else if (this.t == 2) makeblk(t.a, t.b, new 岩浆())
             if (!localsetting["inf-use"]) {

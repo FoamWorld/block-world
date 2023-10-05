@@ -12,9 +12,9 @@ class Block {
         if (im == undefined) im = bimgs["notexture"]
         return im
     }
-    show(x, y) { draw.drawImage(this.imgsource(), x, y, 32, 32) }
+    show(x, y) { draw.drawImage(this.imgsource(), x, y, bsz, bsz) }
     showita(d) {
-        d.drawImage(this.imgsource(), 0, 0, 32, 32)
+        d.drawImage(this.imgsource(), 0, 0, bsz, bsz)
     }
     light() { return 0 }
     begin() { }
@@ -95,6 +95,7 @@ class Block {
 转化属性
     t_mat() 成为材料
 */
+// +burnable
 // +conductable
 class Solid extends Block { // 【固体】，通常指碰撞箱为整的物质
     static bk = false
@@ -119,6 +120,8 @@ class 空气 extends NotSolid {
     onbegin() { }
     onend() { } // 加速，防止过多调用
 }
+function isair(x) { return (x instanceof 空气) }
+
 class 星岩 extends Solid {
     hard() { return 3200 }
 }
@@ -152,7 +155,7 @@ class 水 extends NotSolid {
     }
     show(x, y) {
         draw.fillStyle = `rgb(${64 - 16 * this.depth},${80 - 16 * this.depth},${240 - 16 * this.depth})`
-        draw.fillRect(x, y, 32, 32)
+        draw.fillRect(x, y, bsz, bsz)
     }
     update(x, y) {
         if (localsetting["t"] % 4 != 0) return
@@ -163,7 +166,7 @@ class 水 extends NotSolid {
                 m = Math.max(m, t.depth)
                 t.depth = Math.max(t.depth, this.depth - 1)
             }
-            else if (this.depth != 0 && t instanceof 空气) { // 扩散
+            else if (this.depth != 0 && isair(t)) { // 扩散
                 makeblk(x + direx[i], y + direy[i], new 水(this.depth - 1))
             }
         }
@@ -177,7 +180,7 @@ class 岩浆 extends NotSolid { // 岩浆
     }
     show(x, y) {
         draw.fillStyle = ["#ffffa0", "#fffff0", "#fffffe", "#ffffff"][this.depth]
-        draw.fillRect(x, y, 32, 32)
+        draw.fillRect(x, y, bsz, bsz)
     }
     light() { return 14 }
     update(x, y) {
@@ -192,7 +195,7 @@ class 岩浆 extends NotSolid { // 岩浆
                 m = Math.max(m, t.depth)
                 t.depth = Math.max(t.depth, this.depth - 1)
             }
-            else if (this.depth != 0 && t instanceof 空气) {
+            else if (this.depth != 0 && isair(t)) {
                 makeblk(x + direx[i], y + direy[i], new 岩浆(this.depth - 1))
             }
             else if (t instanceof 岩石) {
@@ -211,7 +214,7 @@ class 石头 extends 岩石 {
         super()
         this.t = t
     }
-    show(x, y) { draw.drawImage(bimgs["石头" + this.t], x, y, 32, 32) }
+    show(x, y) { draw.drawImage(bimgs["石头" + this.t], x, y, bsz, bsz) }
     hard() { return [65, 60, 55, 35][this.t] }
 }
 class 半砖 extends Block { // 0为上面那块，之后顺时针旋转
@@ -227,18 +230,18 @@ class 半砖 extends Block { // 0为上面那块，之后顺时针旋转
     show(x, y) {
         let t = this.mat.constructor.theme
         draw.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
-        if (this.dir == 0) draw.fillRect(x, y, 32, 16)
-        else if (this.dir == 1) draw.fillRect(x + 16, y, 16, 32)
-        else if (this.dir == 2) draw.fillRect(x, y + 16, 32, 16)
-        else draw.fillRect(x, y, 16, 32)
+        if (this.dir == 0) draw.fillRect(x, y, bsz, bsz >> 1)
+        else if (this.dir == 1) draw.fillRect(x + bsz >> 1, y, bsz >> 1, bsz)
+        else if (this.dir == 2) draw.fillRect(x, y + bsz >> 1, bsz, bsz >> 1)
+        else draw.fillRect(x, y, bsz >> 1, bsz)
     }
     showita(d) {
         let t = this.mat.constructor.theme
         d.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
-        if (this.dir == 0) d.fillRect(0, 0, 32, 16)
-        else if (this.dir == 1) d.fillRect(16, 0, 16, 32)
-        else if (this.dir == 2) d.fillRect(0, 16, 32, 16)
-        else d.fillRect(0, 0, 16, 32)
+        if (this.dir == 0) d.fillRect(0, 0, bsz, bsz >> 1)
+        else if (this.dir == 1) d.fillRect(bsz >> 1, 0, bsz >> 1, bsz)
+        else if (this.dir == 2) d.fillRect(0, bsz >> 1, bsz, bsz >> 1)
+        else d.fillRect(0, 0, bsz >> 1, bsz)
     }
     colbox(x, y) {
         if (this.dir == 0) return new BCollisionBox(x, y, x + 1, y + 0.5)
@@ -260,68 +263,11 @@ class 半砖 extends Block { // 0为上面那块，之后顺时针旋转
         }
     }
 }
-class 原木 extends Solid {
-    constructor(t) { super(); this.t = t }
-    show(x, y) { draw.drawImage(bimgs["原木" + this.t], x, y, 32, 32) }
-    hard() { return 25 }
-}
 class 木板 extends Solid {
     constructor(t) { super(); this.t = t }
-    show(x, y) { draw.drawImage(bimgs["木板" + this.t], x, y, 32, 32) }
+    show(x, y) { draw.drawImage(bimgs["木板" + this.t], x, y, bsz, bsz) }
     hard() { return 25 }
     t_mat() { if (this.t == 0) return new 苍穹木() }
-}
-class 树叶 extends NotSolid {
-    static bk = false
-    static tr = true
-    constructor(t) { super(); this.t = t }
-    show(x, y) { draw.drawImage(bimgs["树叶" + this.t], x, y, 32, 32) }
-    hard() { return 15 }
-}
-class 树苗 extends NotSolid {
-    static bk = false
-    static hastrans = true
-    constructor(t) { super(); this.t = t }
-    show(x, y) { draw.drawImage(bimgs["树苗" + this.t], x, y, 32, 32) }
-    hard() { return 15 }
-    update(x, y) {
-        let t = grand()
-        if (t >= 8) return
-        eval(`this.ongrow${this.t}(x,y,t)`)
-    }
-    ongrow0(x, y, t) {
-        if (t < 4) {
-            this.grow0(x, y, 0, 8)
-            this.grow0(x, y, 2, 8)
-        }
-        else {
-            this.grow0(x, y, 1, 8)
-            this.grow0(x, y, 3, 8)
-        }
-        makeblk(x, y, new 原木(0))
-    }
-    grow0(x, y, dir, la) {
-        let l = grand() % la + 1
-        for (let i = 1; i <= l; i++) {
-            if (ndim.blk(x + direx[dir] * i, y + direy[dir] * i).hard() < 15) makeblk(x + direx[dir] * i, y + direy[dir] * i, new 原木(0))
-            else {
-                l = i - 1
-                break
-            }
-        }
-        if (la >= 2 || l >= 2) {
-            let t = grand(), x0 = x + direx[dir] * (l - 1), y0 = y + direy[dir] * (l - 1), dl = left_dir(dir), dr = right_dir(dir)
-            if (t >= 16384) {
-                t -= 16384 // 《反复利用》
-                this.grow0(x0, y0, dl, la >> 1)
-                if (ndim.blk(+direx[dir] * l + direx[dl], y0 + direy[dir] * l + direy[dl]).hard() < 10 && t % 4 != 0) makeblk(x + direx[dir] * l + direx[dl], y0 + direy[dir] * l + direy[dl], new 树叶(0))
-            }
-            if (t >= 8192) {
-                this.grow0(x0, y0, dr, la >> 1)
-                if (ndim.blk(direx[dir] * l + direx[dr], y0 + direy[dir] * l + direy[dr]).hard() < 10 && t % 16 >= 4) makeblk(x + direx[dir] * l + direx[dr], y0 + direy[dir] * l + direy[dr], new 树叶(0))
-            }
-        }
-    }
 }
 class 藤蔓 extends Solid {
     constructor(tmp = 0) { super(); this.tmp = tmp }
@@ -335,7 +281,7 @@ class 藤蔓 extends Solid {
                 if (r instanceof 水) {
                     if (grand() % 50 == 0) makeblk(x, y, new 藤蔓(0))
                 }
-                else if (r instanceof 原木) {
+                else if (r instanceof 原木) { // todo: 原木 tag
                     let rndstore = grand()
                     if (rndstore % 4 != 0 || this.tmp != 1) continue
                     rndstore >>= 3
@@ -343,7 +289,7 @@ class 藤蔓 extends Solid {
                     rndstore >>= 2;
                     let nny = (rndstore % 3) - 1;
                     if (nnx == 0 && nny == 0) continue
-                    if (ndim.blk(x + rx + nnx, y + ry + nny) instanceof 空气) {
+                    if (isair(ndim.blk(x + rx + nnx, y + ry + nny))) {
                         makeblk(x + rx + nnx, y + ry + nny, new 藤蔓核心())
                     }
                 }
@@ -366,7 +312,7 @@ class 藤蔓核心 extends Solid {
             if (rndstore % 15 == 0) {
                 makeblk(x, y, new 藤蔓(this.tmp))
             }
-            else if (r instanceof 空气) {
+            else if (isair(r)) {
                 makeblk(x + rx, y + ry, new 藤蔓核心(this.tmp))
                 makeblk(x, y, new 藤蔓(this.tmp))
             }
@@ -376,14 +322,14 @@ class 藤蔓核心 extends Solid {
 class Bomb extends Solid {
     show(x, y) {
         draw.fillStyle = "#fff"
-        draw.fillRect(x, y, 32, 32)
+        draw.fillRect(x, y, bsz, bsz)
     }
     update(x, y) {
         for (let rx = -2; rx <= 2; rx++) {
             for (let ry = -2; ry <= 2; ry++) {
                 if (rx == 0 && ry == 0) continue
                 let b = ndim.blk(x + rx, y + ry)
-                if (!(b instanceof 空气) && !(b instanceof 星岩)) {
+                if (!isair(b) && !(b instanceof 星岩)) {
                     makeblk(x + rx, y + ry, new 空气())
                 }
             }
@@ -478,8 +424,8 @@ class 玻璃 extends Solid {
     hard() { return 65 }
 }
 class 冰 extends Solid {
-    show(x, y) { draw.fillStyle = `#A0C0FF`; draw.fillRect(x, y, 32, 32) }
-    showita(d) { d.fillStyle = "#A0C0FF"; d.fillRect(0, 0, 32, 32) }
+    show(x, y) { draw.fillStyle = `#A0C0FF`; draw.fillRect(x, y, bsz, bsz) }
+    showita(d) { d.fillStyle = "#A0C0FF"; d.fillRect(0, 0, bsz, bsz) }
     update(x, y) {
         for (let i = 0; i < 4; i++) {
             if (ndim.blk(x + direx[i], y + direy[i]).light() > 8) makeblk(x, y, new 水())
@@ -493,9 +439,9 @@ class 沙子 extends Solid {
 class 告示牌 extends NotSolid {
     static hasgui = true
     static hastrans = true
-    constructor(s = "", c = "#000000") { super(); this.s = s; this.c = c }
+    constructor(s = "", c = "#000") { super(); this.s = s; this.c = c }
     show(x, y) {
-        draw.drawImage(bimgs["告示牌"], x, y, 32, 32)
+        draw.drawImage(bimgs["告示牌"], x, y, bsz, bsz)
         show_after.push(`draw.fillStyle="${this.c}";draw.font="16px";draw.fillText("${this.s}",${x + 2},${y + 18})`)
     }
     hard() { return 25 }
@@ -660,18 +606,18 @@ class 块 extends Solid {
         if (im === undefined) {
             let theme = this.mat.constructor.theme
             draw.fillStyle = `rgb(${theme[0]},${theme[1]},${theme[2]})`
-            draw.fillRect(x, y, 32, 32)
+            draw.fillRect(x, y, bsz, bsz)
         }
-        else draw.drawImage(im, x, y, 32, 32)
+        else draw.drawImage(im, x, y, bsz, bsz)
     }
     showita(d) {
         let im = bimgs[this.id()]
         if (im === undefined) {
             let theme = this.mat.constructor.theme
             d.fillStyle = `rgb(${theme[0]},${theme[1]},${theme[2]})`
-            d.fillRect(0, 0, 32, 32)
+            d.fillRect(0, 0, bsz, bsz)
         }
-        else d.drawImage(im, 0, 0, 32, 32)
+        else d.drawImage(im, 0, 0, bsz, bsz)
     }
 }
 class 电池块 extends Solid {

@@ -27,6 +27,7 @@ function setting_load(par) { // 设置
     div.append(
         createQElement("span", { innerText: "设置用户名" }),
         createQElement("input", { type: "text", id: "set-username", size: "10", value: "Anonymous" })
+        // todo: 按钮
     )
     for (let i of setting_chs) {
         let t = setting[i[1]]

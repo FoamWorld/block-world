@@ -60,7 +60,7 @@ Chunk.prototype.generate__infmaze = function (x, y) {
     if (!decision) {
         let dist = x ^ 2 + y ^ 2
         if (dist <= 5) {
-            content.give(new IFB(new 树苗(0)), Number(gchance(1, 3)) + 1)
+            content.give(new IFB(new sky_sapling()), Number(gchance(1, 3)) + 1)
             content.give(new 桶(rand() % 3), 1)
             content.give(new 木板(0), rand() % 4 + 2)
             content.give(new 锭(new 铁()), rand() % 5)
