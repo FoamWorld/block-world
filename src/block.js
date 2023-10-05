@@ -1,4 +1,5 @@
 const bsz = 32
+const bsz2 = 16
 
 var tarray = []
 class Block {
@@ -162,7 +163,6 @@ class 水 extends NotSolid {
         draw.fillRect(x, y, bsz, bsz)
     }
     update(x, y) {
-        if (localsetting["t"] % 4 != 0) return
         var m = 0
         for (let i = 0; i < 4; i++) {
             let t = ndim.blk(x + direx[i], y + direy[i])
@@ -188,7 +188,6 @@ class 岩浆 extends NotSolid { // 岩浆
     }
     light() { return 14 }
     update(x, y) {
-        if (localsetting["t"] % 4 != 0) return
         var m = 0, nw = false, nr = false
         for (let i = 0; i < 4; i++) {
             let t = ndim.blk(x + direx[i], y + direy[i])
@@ -234,18 +233,18 @@ class 半砖 extends Block { // 0为上面那块，之后顺时针旋转
     show(x, y) {
         let t = this.mat.constructor.theme
         draw.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
-        if (this.dir == 0) draw.fillRect(x, y, bsz, bsz >> 1)
-        else if (this.dir == 1) draw.fillRect(x + bsz >> 1, y, bsz >> 1, bsz)
-        else if (this.dir == 2) draw.fillRect(x, y + bsz >> 1, bsz, bsz >> 1)
-        else draw.fillRect(x, y, bsz >> 1, bsz)
+        if (this.dir == 0) draw.fillRect(x, y, bsz, bsz2)
+        else if (this.dir == 1) draw.fillRect(x + bsz2, y, bsz2, bsz)
+        else if (this.dir == 2) draw.fillRect(x, y + bsz2, bsz, bsz2)
+        else draw.fillRect(x, y, bsz2, bsz)
     }
     showita(d) {
         let t = this.mat.constructor.theme
         d.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
-        if (this.dir == 0) d.fillRect(0, 0, bsz, bsz >> 1)
-        else if (this.dir == 1) d.fillRect(bsz >> 1, 0, bsz >> 1, bsz)
-        else if (this.dir == 2) d.fillRect(0, bsz >> 1, bsz, bsz >> 1)
-        else d.fillRect(0, 0, bsz >> 1, bsz)
+        if (this.dir == 0) d.fillRect(0, 0, bsz, bsz2)
+        else if (this.dir == 1) d.fillRect(bsz2, 0, bsz2, bsz)
+        else if (this.dir == 2) d.fillRect(0, bsz2, bsz, bsz2)
+        else d.fillRect(0, 0, bsz2, bsz)
     }
     colbox(x, y) {
         if (this.dir == 0) return new BCollisionBox(x, y, x + 1, y + 0.5)
