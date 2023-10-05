@@ -7,7 +7,7 @@ class Block {
     static tr = false
     get isBurnable() { return false }
     get isConductable() { return false }
-    get isWood() { return true }
+    get isWood() { return false }
     id() { return this.t === undefined ? this.constructor.name : this.constructor.name + this.t }
     text() { return textof(localsetting["l"], this.id()) }
     imgsource() {

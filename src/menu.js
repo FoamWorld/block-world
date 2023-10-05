@@ -30,7 +30,7 @@ function intend_open_onload() {
 function intend_open_sl_upd() {
     let list = gid("savedlist")
     for (let i of saved_li) {
-        let tr = createQElement("tr", { id: `${i}%r`, className: "saved_tr" })
+        let tr = createQElement("tr", { id: `${i}%r` })
         tr.append(
             createQElement("td", { innerText: i }),
             createQElement("td", { innerText: "载入", className: "tech-clickable", onclick: function () { load_saved(i) } }),

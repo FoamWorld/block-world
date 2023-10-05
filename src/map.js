@@ -55,6 +55,11 @@ class Chunk { // 区块：64x64
             for (let j = 0; j < 64; j++)this.blk[i][j] = new 空气()
         }
     }
+    generate__empty(x, y) {
+        for (let i = 0; i < 64; i++) {
+            for (let j = 0; j < 64; j++)this.blk[i][j] = new 空气()
+        }
+    }
     generate(x, y) {
         eval(`this.generate_${localsetting["type"]}(${x},${y})`)
         var t = saved[wpos(x, y)]
@@ -186,6 +191,7 @@ function initgenerator() {
     globalThis["initgen_" + localsetting["type"]].call()
 }
 function initgen_debug() { ply = new Player(0, 0) }
+function initgen__empty() { ply = new Player(0, 0) }
 function pregenerate() {
     var px = 64 * Math.floor(ply.x / 64), py = 64 * Math.floor(ply.y / 64)
     for (let i = px - 128; i <= px + 128; i += 64) {
@@ -219,7 +225,7 @@ function updategame() {
         }
     }
 }
-function makeblk(x, y, o, force = true, pue = false) {
+function makeblk(x, y, o = new 空气(), force = true, pue = false) {
     var tx = x & 63, ty = y & 63
     var lx = x - tx, ly = y - ty
     let ch = ndim.chk(lx, ly)

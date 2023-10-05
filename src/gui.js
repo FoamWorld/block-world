@@ -3,6 +3,31 @@ function createQElement(tagname, deco) {
     for (let k of Object.keys(deco)) tag[k] = deco[k]
     return tag
 }
+function append_setting_input(guide, input_deco) {
+    return [
+        createQElement("span", { innerText: guide }),
+        createQElement("input", input_deco),
+        document.createElement("br")
+    ]
+}
+function append_setting_selection(guide, select_deco, dict) {
+    let select = createQElement("select", select_deco)
+    let flag = true
+    for (let key of Object.keys(dict)) {
+        let option = createQElement("option", { value: key, innerText: dict[key] })
+        if (flag) {
+            option.selected = true
+            flag = false
+        }
+        select.append(option)
+    }
+    return [
+        createQElement("span", { innerText: guide }),
+        select,
+        document.createElement("br")
+    ]
+}
+function append_setting_checkbox() { }
 
 function menu_load(par) { // 主菜单
     let div = createQElement("div", { id: "fw_title" })
@@ -25,9 +50,12 @@ function menu_load(par) { // 主菜单
 function setting_load(par) { // 设置
     let div = createQElement("div", { id: "checker", className: "textarea-ink" })
     div.append(
-        createQElement("span", { innerText: "设置用户名" }),
-        createQElement("input", { type: "text", id: "set-username", size: "10", value: "Anonymous" })
-        // todo: 按钮
+        ...append_setting_input("设置用户名", { id: "set-username", type: "text", size: "10", value: "Anonymous" }),
+        createQElement("button", {
+            innerText: "确认", onclick: function () {
+                setting["username"] = gid("set-username").value
+            }
+        })
     )
     for (let i of setting_chs) {
         let t = setting[i[1]]
@@ -53,18 +81,10 @@ function setting_load(par) { // 设置
 function intend_new_game_load(par) {// 新世界设置
     let div = createQElement("div", { className: "setting-box textarea-ink" })
     div.append(
-        createQElement("span", { innerText: "输入世界名" }),
-        createQElement("input", { type: "text", id: "set-worldname", size: "8", value: "未命名" }),
-        document.createElement("br"),
-        createQElement("span", { innerText: "设置模式" }),
-        createQElement("select", { id: "mode", innerHTML: `<option value="s" selected="selected">正常</option><option value="c">神性</option>` }),
-        document.createElement("br"),
-        createQElement("span", { innerText: "输入种子" }),
-        createQElement("input", { type: "number", id: "set-worldseed", size: "8", value: "0" }),
-        document.createElement("br"),
-        createQElement("span", { innerText: "设置地形" }),
-        createQElement("select", { id: "generator", innerHTML: `<option value="debug" selected="selected">默认</option><option value="_infmaze">无限迷宫</option>` }),
-        document.createElement("br"),
+        ...append_setting_input("输入世界名", { id: "set-worldname", type: "text", size: "8", value: "未命名世界" }),
+        ...append_setting_selection("设置模式", { id: "set-mode" }, { "s": "生存", "c": "创造", }),
+        ...append_setting_input("输入种子", { id: "set-worldseed", type: "number", size: "8", value: "0" }),
+        ...append_setting_selection("设置地形", { id: "set-generator" }, { debug: "调试", _empty: "空", _infmaze: "无限迷宫" }),
         createQElement("button", { type: "submit", form: "newgame", innerText: "创建新世界", onclick: function () { new_game() } })
     )
     par.replaceChildren(div)

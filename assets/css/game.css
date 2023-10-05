@@ -52,7 +52,7 @@
     cursor: pointer;
     width: 40px;
     height: 20px;
-    border: 1px solid #929292;
+    border: 1px solid #999;
     border-radius: 20px;
 }
 
@@ -75,14 +75,6 @@
     border: none;
     margin-top: 72px;
     font-size: 36px;
-}
-
-.saved_tr {
-    display: block;
-    position: relative;
-    height: 32px;
-    margin-bottom: 4px;
-    border-radius: 4px;
 }
 
 .grid_table {

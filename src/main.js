@@ -66,10 +66,10 @@ function new_game() { // 载入 game_html 时
         "step": 0.3,
         "t": 0,
         "tmove": true,
-        "type": gid("generator").value,
+        "type": gid("set-generator").value,
         "worldname": gid("set-worldname").value,
     }
-    setgamemode(gid("mode").value)
+    setgamemode(gid("set-mode").value)
     initgenerator()
     initgame()
 }
