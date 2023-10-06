@@ -246,7 +246,7 @@ function mousedown(e) {
     }
     else {
         let tb = ndim.blk(t.a, t.b)
-        var te = tb.hard()
+        var te = tb.hard
         var pe = ply.its.i[localsetting["chosen_itm"]].strength(tb)
         var time = 0
         if (!localsetting["break-all"]) {
@@ -312,7 +312,7 @@ function userfill(x, y) {
 }
 function userdestroy(x, y) {
     if (guix == x && guiy == y) closebgui()
-    makeblk(x, y, new 空气(), localsetting["break-all"])
+    removeblk(x, y, localsetting["break-all"])
     mouseup_done = 3
 }
 // UI
