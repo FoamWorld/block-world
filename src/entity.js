@@ -36,7 +36,6 @@ class Player {
             else gid(i - 8).style.border = "1px solid silver"
         })
     }
-    initcregui() { }
     show() { drawRot(draw, pimg, 226, 226, 28, 28, this.θ) }
     stepl() { return localsetting["step"] }
     move(x, y) {

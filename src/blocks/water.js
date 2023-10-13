@@ -5,7 +5,7 @@ class water extends NotSolid {
 		draw.fillRect(x, y, bsz, bsz)
 	}
 	update(x, y) {
-		var m = 0
+		let m = 0
 		for (let i = 0; i < 4; i++) {
 			let t = ndim.blk(x + direx[i], y + direy[i])
 			if (oftype(t, "water")) {

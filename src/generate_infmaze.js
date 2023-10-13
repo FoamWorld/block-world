@@ -11,7 +11,7 @@ Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割
     let x0 = rx - lx, y0 = ry - ly
     if (x0 == 0 || y0 == 0) {
         for (let i = lx; i <= rx; i++) {
-            for (let j = ly; j <= ry; j++)this.blk[i][j] = new 空气()
+            for (let j = ly; j <= ry; j++)this.blk[i][j] = block("air")
         }
         return
     }
@@ -27,24 +27,24 @@ Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割
     let d = rand() % 4
     let myl = (my - ly + 1) >> 1, myr = (ry - my + 1) >> 1, mxl = (mx - lx + 1) >> 1, mxr = (rx - mx + 1) >> 1
     if (d == 0) {
-        this.blk[rx - 2 * (rand() % mxr)][my] = new 空气()
-        this.blk[mx][ly + 2 * (rand() % myl)] = new 空气()
-        this.blk[mx][ry - 2 * (rand() % myr)] = new 空气()
+        this.blk[rx - 2 * (rand() % mxr)][my] = block("air")
+        this.blk[mx][ly + 2 * (rand() % myl)] = block("air")
+        this.blk[mx][ry - 2 * (rand() % myr)] = block("air")
     }
     else if (d == 1) {
-        this.blk[lx + 2 * (rand() % mxl)][my] = new 空气()
-        this.blk[mx][ly + 2 * (rand() % myl)] = new 空气()
-        this.blk[mx][ry - 2 * (rand() % myr)] = new 空气()
+        this.blk[lx + 2 * (rand() % mxl)][my] = block("air")
+        this.blk[mx][ly + 2 * (rand() % myl)] = block("air")
+        this.blk[mx][ry - 2 * (rand() % myr)] = block("air")
     }
     else if (d == 2) {
-        this.blk[lx + 2 * (rand() % mxl)][my] = new 空气()
-        this.blk[rx - 2 * (rand() % mxr)][my] = new 空气()
-        this.blk[mx][ry - 2 * (rand() % myr)] = new 空气()
+        this.blk[lx + 2 * (rand() % mxl)][my] = block("air")
+        this.blk[rx - 2 * (rand() % mxr)][my] = block("air")
+        this.blk[mx][ry - 2 * (rand() % myr)] = block("air")
     }
     else {
-        this.blk[lx + 2 * (rand() % mxl)][my] = new 空气()
-        this.blk[rx - 2 * (rand() % mxr)][my] = new 空气()
-        this.blk[mx][ly + 2 * (rand() % myl)] = new 空气()
+        this.blk[lx + 2 * (rand() % mxl)][my] = block("air")
+        this.blk[rx - 2 * (rand() % mxr)][my] = block("air")
+        this.blk[mx][ly + 2 * (rand() % myl)] = block("air")
     }
 }
 Chunk.prototype.generate__infmaze = function (x, y) {
@@ -56,22 +56,25 @@ Chunk.prototype.generate__infmaze = function (x, y) {
     this.generate__infmaze_4(1, 1, 63, 63)
     // 区块相连
     let decision = localsetting["plain"] == true
-    let content = decision ? new 空气() : new 箱子(new IB(16))
-    if (!decision) {
+    let content
+    if (decision)
+        content = block("air")
+    else {
+        content = block("chest", { its: new IB(16) })
         let dist = x ^ 2 + y ^ 2
         if (dist <= 5) {
-            content.give(new IFB(new sky_sapling()), Number(gchance(1, 3)) + 1)
+            content.give(block("sky_sapling"), Number(gchance(1, 3)) + 1)
             content.give(new 桶(rand() % 3), 1)
-            content.give(new 木板(0), rand() % 4 + 2)
+            content.give(block("sky_plank"), rand() % 4 + 2)
             content.give(new 锭(new 铁()), rand() % 5)
             content.give(new 锭(new 铜()), Number(gchance(1, 7)))
         }
         else {
-            content.give(new 藤蔓核心(), 1)
-            content.give(new 萤石(), rand() % 3)
+            content.give(block("vine_grow"), 1)
+            content.give(block("fluorite"), rand() % 3)
         }
     }
     this.blk[2 * (rand() % 32) + 1][0] = content
-    this.blk[0][2 * (rand() % 32) + 1] = new 空气()
+    this.blk[0][2 * (rand() % 32) + 1] = block("air")
 }
 function initgen__infmaze() { ply = new Player(1.5, 1.5) }

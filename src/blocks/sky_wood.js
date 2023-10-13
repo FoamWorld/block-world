@@ -1,20 +1,25 @@
 class sky_log extends Solid {
+	get hard() { return 25 }
 	get isBurnable() { return true }
 	get isWood() { return true }
-	hard() { return 25 }
 }
 class sky_leaf extends NotSolid {
 	static bk = false
+	get hard() { return 15 }
 	get isBurnable() { return true }
-	hard() { return 15 }
 	drop() { return [pair(new IFB(new sky_sapling()), grand() % 2)] }
+}
+class sky_plank extends Solid {
+    get hard() { return 25 }
+    get isBurnable() { return true }
+    t_mat() { if (this.t == 0) return new 苍穹木() }
 }
 class sky_sapling extends NotSolid {
 	static bk = false
 	static hastrans = true
+	get hard() { return 15 }
 	get isBurnable() { return true }
 	get isWood() { return true }
-	hard() { return 15 }
 	update(x, y) {
 		let rndstore = grand()
 		if (rndstore < 8)

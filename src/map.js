@@ -52,12 +52,12 @@ class Chunk { // 区块：64x64
     }
     generate_debug(x, y) { // 调试用生成器
         for (let i = 0; i < 64; i++) {
-            for (let j = 0; j < 64; j++)this.blk[i][j] = new 空气()
+            for (let j = 0; j < 64; j++)this.blk[i][j] = block("air")
         }
     }
     generate__empty(x, y) {
         for (let i = 0; i < 64; i++) {
-            for (let j = 0; j < 64; j++)this.blk[i][j] = new 空气()
+            for (let j = 0; j < 64; j++)this.blk[i][j] = block("air")
         }
     }
     generate(x, y) {
@@ -225,7 +225,24 @@ function updategame() {
         }
     }
 }
-function makeblk(x, y, o = new 空气(), force = true, pue = false) {
+
+function removeblk(x, y, force = false) {
+    var tx = x & 63, ty = y & 63
+    var lx = x - tx, ly = y - ty
+    let ch = ndim.chk(lx, ly)
+    ch.blk[tx][ty].onend(x, y)
+    if (!force && ch.blk[tx][ty].onbroken(x, y, null) === false) return
+    ch.blk[tx][ty] = block("air")
+    pushsave(lx, ly, tx, ty, block("air"))
+}
+function setblk(x, y, o = block("air")) {
+    var tx = x & 63, ty = y & 63
+    var lx = x - tx, ly = y - ty
+    let ch = ndim.chk(lx, ly)
+    ch.blk[tx][ty] = o
+    pushsave(lx, ly, tx, ty, o)
+}
+function makeblk(x, y, o = block("air"), force = true, pue = false) {
     var tx = x & 63, ty = y & 63
     var lx = x - tx, ly = y - ty
     let ch = ndim.chk(lx, ly)
