@@ -37,56 +37,56 @@ class sky_sapling extends NotSolid {
 		let l = 0, r = 0
 		if (d == 0) { // 横
 			if (cx1) {
-				makeblk(x + 1, y, new sky_log())
-				makeblk(x + 2, y, new sky_log())
+				makeblk(x + 1, y, block("sky_log"))
+				makeblk(x + 2, y, block("sky_log"))
 				for (r = 3; r <= 6; r++)
 					if (isair(ndim.blk(x + r, y)))
-						makeblk(x + r, y, new sky_log())
+						makeblk(x + r, y, block("sky_log"))
 					else
 						break
 			}
 			if (cx2) {
-				makeblk(x - 1, y, new sky_log())
-				makeblk(x - 2, y, new sky_log())
+				makeblk(x - 1, y, block("sky_log"))
+				makeblk(x - 2, y, block("sky_log"))
 				for (l = 3; l <= 6; l++)
 					if (isair(ndim.blk(x - l, y)))
-						makeblk(x - l, y, new sky_log())
+						makeblk(x - l, y, block("sky_log"))
 					else
 						break
 			}
 			for (let i = -l; i <= r; i++) {
 				if (isair(ndim.blk(x + i, y - 1)) && gchance(1, 3))
-					makeblk(x + i, y - 1, new sky_leaf())
+					makeblk(x + i, y - 1, block("sky_leaf"))
 				if (isair(ndim.blk(x + i, y + 1)) && gchance(1, 3))
-					makeblk(x + i, y + 1, new sky_leaf())
+					makeblk(x + i, y + 1, block("sky_leaf"))
 			}
 		}
 		else { // 纵
 			if (cy1) {
-				makeblk(x, y + 1, new sky_log())
-				makeblk(x, y + 2, new sky_log())
+				makeblk(x, y + 1, block("sky_log"))
+				makeblk(x, y + 2, block("sky_log"))
 				for (r = 3; r <= 6; r++)
 					if (isair(ndim.blk(x, y + r)))
-						makeblk(x, y + r, new sky_log())
+						makeblk(x, y + r, block("sky_log"))
 					else
 						break
 			}
 			if (cy2) {
-				makeblk(x, y - 1, new sky_log())
-				makeblk(x, y - 2, new sky_log())
+				makeblk(x, y - 1, block("sky_log"))
+				makeblk(x, y - 2, block("sky_log"))
 				for (l = 3; l <= 6; l++)
 					if (isair(ndim.blk(x, y - l)))
-						makeblk(x, y - l, new sky_log())
+						makeblk(x, y - l, block("sky_log"))
 					else
 						break
 			}
 			for (let i = -l; i <= r; i++) {
 				if (isair(ndim.blk(x - 1, y + i)) && gchance(1, 3))
-					makeblk(x - 1, y + i, new sky_leaf())
+					makeblk(x - 1, y + i, block("sky_leaf"))
 				if (isair(ndim.blk(x + 1, y + i)) && gchance(1, 3))
-					makeblk(x + 1, y + i, new sky_leaf())
+					makeblk(x + 1, y + i, block("sky_leaf"))
 			}
 		}
-		makeblk(x, y, new sky_log())
+		makeblk(x, y, block("sky_log"))
 	}
 }

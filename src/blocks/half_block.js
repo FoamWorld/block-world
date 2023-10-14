@@ -5,7 +5,7 @@ class half_block extends Block {
         this.dir = dir
     }
     get hard() { return this.mat.constructor.hard }
-    get id() { return `${this.mat}半砖` }
+    get id() { return this.mat.constructor.name + "_half_block" }
     static hastrans = true
     amount() { return 0.5 }
     show(x, y) {
