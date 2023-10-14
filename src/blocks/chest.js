@@ -15,7 +15,4 @@ class chest extends Solid {
     give(it, n) {
         this.its.give(it, n)
     }
-	give2(blk, n) {
-		this.its.give(new IFB(blk), n)
-	}
 }

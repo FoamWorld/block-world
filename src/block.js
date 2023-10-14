@@ -14,6 +14,7 @@ class Block {
     get material() { return "" }
     get text() { return textof(localsetting["l"], this.id) }
     static tr = false
+    formblock() { return clone(this) }
     imgsource() {
         let im = bimgs[this.id]
         if (im == undefined) im = bimgs["notexture"]
@@ -68,7 +69,7 @@ class Block {
 }
 function block(className, args = {}) {
     let blk = eval(`new ${className}()`)
-    for(let key in args) {
+    for (let key in args) {
         eval(`blk.${key}=${args.key}`)
     }
     return blk

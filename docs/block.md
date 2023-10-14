@@ -36,6 +36,17 @@
 | `imgsource()` | 图像资源 |
 | `putextra(x, y)` | 放置时额外所为 |
 | `show(x, y)` | canvas 显示 |
-| `showita(d)` | 物品显示 |
 | `update(x, y)` | 更新 |
 | `updategui()` | 更新 GUI |
+
+## 物品属性
+| 名称 | 含义 |
+| :-: | :-: |
+| `stack` | 堆叠数 |
+
+## 物品函数
+| 名称 | 含义 |
+| :-: | :-: |
+| `formblock()` | 成块（不能为 `null`） |
+| `showita(d)` | 物品显示 |
+| `strength(tar)` | 作用于 `tar` 的强度 |

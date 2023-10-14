@@ -85,7 +85,7 @@ class Item {
     static stack = 15
     get text() { return textof(localsetting["l"], this.id()) }
     static useonce = false
-    strength() { return 15 }
+    strength(tar) { return 15 }
     formblock() { return null }
     showit(d) {
         d.fillStyle = "slategray"
@@ -111,16 +111,5 @@ class EI extends Item {
     get id() { return "" }
     get text() { return "" }
     showita() { }
-}
-class IFB extends Item {
-    static stack = 4
-    constructor(b) { super(); this.b = b }
-    id() { return this.b.id() }
-    text() { return this.b.text() }
-    amount() { return this.b.amount() }
-    show() { this.b.show() }
-    showita(d) { return this.b.showita(d) }
-    formblock() { return clone(this.b) }
-    t_mat() { return this.b.t_mat() }
 }
 class stick extends Item { }
