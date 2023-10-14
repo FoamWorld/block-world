@@ -18,9 +18,11 @@ function dragover(e) {
     if (ref_type[drag_to] == "c") e.preventDefault()
 }
 var ref_get = [], ref_set = [], ref_type = []
-/*c for common
-r for read-only
-i for infinite*/
+/*
+    c : common
+    r : read-only
+    i : infinite
+*/
 function drop(e) {
     // 交换数据
     if (drag_from == drag_to) return
@@ -79,6 +81,7 @@ function drop(e) {
 class Item {
     static canuse = false
     get id() { return this.constructor.name }
+    get material() { return "" }
     static stack = 15
     get text() { return textof(localsetting["l"], this.id()) }
     static useonce = false
@@ -95,18 +98,15 @@ class Item {
         d.drawImage(im, 0, 0, 32, 32)
     }
     onunuse() { }
-    t_mat() { return this.mat }
 }
-/*
-    amount() 所含材质量
-    showit(d) 显示物品
-    showita(d) 辅助showit
-    formblock() 成块（若能）
-    strength(tar) 强度
-事件属性
-    onuse() 使用开始
-    onunuse() 使用停止（不适用useonce=true）
-*/
+function item(className, args = {}) {
+    let it = eval(`new ${className}()`)
+    for (let key in args) {
+        eval(`it.${key}=${args.key}`)
+    }
+    return it
+}
+
 class EI extends Item {
     get id() { return "" }
     get text() { return "" }

@@ -1,7 +1,6 @@
 class Part extends Item {
     constructor(mat) { super(); this.mat = mat }
-    get id() { return this.mat.constructor.name + this.constructor.name }
-    amount() { return amountof[this.mat.constructor.name] }
+    get id() { return this.mat + this.constructor.name }
     showita(d) {
         let id = this.id()
         let c = bcaches[id]
@@ -13,10 +12,10 @@ class Part extends Item {
     }
 }
 class ingot extends Part { }
-class stamina extends Part {
-    amount() { return 0.25 }
+class lamina extends Part {
+    get amount() { return 0.25 }
     showita(d) {
-        let t = this.mat.constructor.theme
+        let t = materials[this.mat]["theme"]
         d.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
         d.fillRect(0, 0, 32, 32)
     }

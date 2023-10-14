@@ -12,7 +12,7 @@ class sky_leaf extends NotSolid {
 class sky_plank extends Solid {
     get hard() { return 25 }
     get isBurnable() { return true }
-    t_mat() { if (this.t == 0) return new 苍穹木() }
+    get material() { return "sky_wood" }
 }
 class sky_sapling extends NotSolid {
 	static bk = false

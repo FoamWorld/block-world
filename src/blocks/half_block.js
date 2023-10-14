@@ -4,12 +4,12 @@ class half_block extends Block {
         this.mat = mat
         this.dir = dir
     }
-    get hard() { return this.mat.constructor.hard }
-    get id() { return this.mat.constructor.name + "_half_block" }
+    get amount() { return 0.5 }
+    get hard() { return materials[this.mat]["hard"] }
+    get id() { return this.mat + "_half_block" }
     static hastrans = true
-    amount() { return 0.5 }
     show(x, y) {
-        let t = this.mat.constructor.theme
+        let t = materials[this.mat]["theme"]
         draw.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
         if (this.dir == 0) draw.fillRect(x, y, bsz, bsz2)
         else if (this.dir == 1) draw.fillRect(x + bsz2, y, bsz2, bsz)
@@ -17,7 +17,7 @@ class half_block extends Block {
         else draw.fillRect(x, y, bsz2, bsz)
     }
     showita(d) {
-        let t = this.mat.constructor.theme
+        let t = materials[this.mat]["theme"]
         d.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`
         if (this.dir == 0) d.fillRect(0, 0, bsz, bsz2)
         else if (this.dir == 1) d.fillRect(bsz2, 0, bsz2, bsz)

@@ -16,8 +16,8 @@ Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割
         return
     }
     let mx = lx + 2 * (rand() % (x0 >> 1)) + 1, my = ly + 2 * (rand() % (y0 >> 1)) + 1
-    for (let i = lx; i <= rx; i++)this.blk[i][my] = new 星岩()
-    for (let i = ly; i <= ry; i++)this.blk[mx][i] = new 星岩()
+    for (let i = lx; i <= rx; i++)this.blk[i][my] = block("wall")
+    for (let i = ly; i <= ry; i++)this.blk[mx][i] = block("wall")
     // 4个小区间
     this.generate__infmaze_4(lx, ly, mx - 1, my - 1)
     this.generate__infmaze_4(lx, my + 1, mx - 1, ry)
@@ -49,8 +49,8 @@ Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割
 }
 Chunk.prototype.generate__infmaze = function (x, y) {
     for (let i = 0; i < 64; i++) {
-        this.blk[i][0] = new 星岩()
-        this.blk[0][i] = new 星岩()
+        this.blk[i][0] = block("wall")
+        this.blk[0][i] = block("wall")
     }
     srand = (x << 15 + y) ^ localsetting["seed"] << 3
     this.generate__infmaze_4(1, 1, 63, 63)
@@ -64,10 +64,10 @@ Chunk.prototype.generate__infmaze = function (x, y) {
         let dist = x ^ 2 + y ^ 2
         if (dist <= 5) {
             content.give(block("sky_sapling"), Number(gchance(1, 3)) + 1)
-            content.give(new 桶(rand() % 3), 1)
+            content.give(item("bucket", { tID: rand() % 3 }), 1)
             content.give(block("sky_plank"), rand() % 4 + 2)
-            content.give(new 锭(new 铁()), rand() % 5)
-            content.give(new 锭(new 铜()), Number(gchance(1, 7)))
+            content.give(item("ingot", { mat: "iron" }), rand() % 5)
+            content.give(item("ingot", { mat: "copper" }), Number(gchance(1, 7)))
         }
         else {
             content.give(block("vine_grow"), 1)

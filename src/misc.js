@@ -84,6 +84,9 @@ function pair(a, b) { return new Pair(a, b) }
 function gid(s) {
     return document.getElementById(s)
 }
+function oftype(obj, className) {
+    return obj.constructor.name == className
+}
 // 信息区 api
 var eventstack = []
 function info_alert(important) {

@@ -1,7 +1,7 @@
 class mould extends Item {
     constructor(sh, mat) { super(); this.sh = sh; this.mat = mat }
-    id() { return `${this.mat.constructor.name}质${this.sh}模具` }
-    amount() { return 1 - amountof[this.sh] }
+    get amount() { return 1 - amountof[this.sh] }
+    get id() { return `${this.mat}_mould_${this.sh}` }
     showita(d) {
         let id = this.id()
         let c = bcaches[id]
