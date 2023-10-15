@@ -28,41 +28,41 @@ function drop(e) {
     if (drag_from == drag_to) return
     let f1 = clone(ref_get[drag_from](drag_from))
     let f2 = clone(ref_get[drag_to](drag_to))
-    if (f2.a instanceof EI) {
+    if (f2.first instanceof EI) {
         if (ref_type[drag_from] == "i") {
-            if (e.ctrlKey) ref_set[drag_to](drag_to, pair(f1.a, f1.a.constructor.stack))
-            else ref_set[drag_to](drag_to, pair(f1.a, 1))
+            if (e.ctrlKey) ref_set[drag_to](drag_to, pair(f1.first, f1.first.constructor.stack))
+            else ref_set[drag_to](drag_to, pair(f1.first, 1))
         }
         else {
             if (e.ctrlKey) { // 分半
-                let mi = f1.b >> 1
-                ref_set[drag_from](drag_from, pair(mi == 0 ? new EI() : f1.a, mi))
-                ref_set[drag_to](drag_to, pair(clone(f1.a), f1.b - mi))
+                let mi = f1.second >> 1
+                ref_set[drag_from](drag_from, pair(mi == 0 ? new EI() : f1.first, mi))
+                ref_set[drag_to](drag_to, pair(clone(f1.first), f1.second - mi))
             }
             else if (e.shiftKey) { // 分一
-                if (f1.b == 1) return
-                ref_set[drag_from](drag_from, pair(f1.a, 1))
-                ref_set[drag_to](drag_to, pair(clone(f1.a), f1.b - 1))
+                if (f1.second == 1) return
+                ref_set[drag_from](drag_from, pair(f1.first, 1))
+                ref_set[drag_to](drag_to, pair(clone(f1.first), f1.second - 1))
             }
             else { // 移动
                 ref_set[drag_from](drag_from, pair(new EI(), 0))
-                ref_set[drag_to](drag_to, pair(f1.a, f1.b))
+                ref_set[drag_to](drag_to, pair(f1.first, f1.second))
             }
         }
     }
-    else if (f1.a.id() == f2.a.id()) { // 相同叠加
-        let st = f2.a.constructor.stack
-        if (st == f2.b) return
-        if (ref_type[drag_from] == "i") ref_set[drag_to](drag_to, pair(f2.a, f2.b + 1))
+    else if (f1.first.id() == f2.first.id()) { // 相同叠加
+        let st = f2.first.constructor.stack
+        if (st == f2.second) return
+        if (ref_type[drag_from] == "i") ref_set[drag_to](drag_to, pair(f2.first, f2.second + 1))
         else {
-            let sum = f1.b + f2.b
+            let sum = f1.second + f2.second
             if (sum > st) {
-                ref_set[drag_from](drag_from, pair(f1.a, sum - st))
-                ref_set[drag_to](drag_to, pair(f2.a, st))
+                ref_set[drag_from](drag_from, pair(f1.first, sum - st))
+                ref_set[drag_to](drag_to, pair(f2.first, st))
             }
             else {
                 ref_set[drag_from](drag_from, pair(new EI(), 0))
-                ref_set[drag_to](drag_to, pair(f1.a, sum))
+                ref_set[drag_to](drag_to, pair(f1.first, sum))
             }
         }
     }
@@ -83,7 +83,7 @@ class Item {
     get id() { return this.constructor.name }
     get material() { return "" }
     static stack = 15
-    get text() { return textof(localsetting["l"], this.id()) }
+    get text() { return text_translate(this.id) }
     static useonce = false
     strength(tar) { return 15 }
     formblock() { return null }

@@ -3,8 +3,8 @@ class lighter extends Item {
 	onuse() {
 		if (Number.isNaN(mousex) || Number.isNaN(mousey)) return
 		let t = pos_by_showpos(mousex, mousey)
-		let b = ndim.blk(t.a, t.b)
+		let b = ndim.blk(t.first, t.second)
 		if (b.isBurnable)
-			makeblk(t.a, t.b, block("fire"))
+			makeblk(t.first, t.second, block("fire"))
 	}
 }

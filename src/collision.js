@@ -16,7 +16,8 @@ class SegCollisionBox {
         this.ry = ry
     }
     collide_with_blk(t) {
-        if (t instanceof EmptyCollisionBox) return false
+        if (t instanceof EmptyCollisionBox)
+            return false
         else {
             // 上下水平线段
             if (this.ly == this.ry) { // 线段水平
@@ -51,17 +52,15 @@ class CircleCollisionBox {
         return Math.abs(a * this.x + b * this.y + c) < Math.hypot(a, b) * this.r
     }
     collide_with_blk(t) {
-        if (t instanceof EmptyCollisionBox) return false
+        if (t instanceof EmptyCollisionBox)
+            return false
         else { // 判定：圆心在圆角矩形内，可分为 2 个矩形，4 个圆
-            if (t.lx - this.r < this.x && this.x < t.rx + this.r && t.ly < this.y && this.y < t.ry) {
+            if (t.lx - this.r < this.x && this.x < t.rx + this.r && t.ly < this.y && this.y < t.ry)
                 return true
-            }
-            if (t.lx < this.x && this.x < t.rx && t.ly - this.r < this.y && this.y < t.ry + this.r) {
+            if (t.lx < this.x && this.x < t.rx && t.ly - this.r < this.y && this.y < t.ry + this.r)
                 return true
-            }
-            if (Math.hypot(this.x - t.lx, this.y - t.ly) < this.r || Math.hypot(this.x - t.lx, this.y - t.ry) < this.r || Math.hypot(this.x - t.rx, this.y - t.ly) < this.r || Math.hypot(this.x - t.rx, this.y - t.ry) < this.r) {
+            if (Math.hypot(this.x - t.lx, this.y - t.ly) < this.r || Math.hypot(this.x - t.lx, this.y - t.ry) < this.r || Math.hypot(this.x - t.rx, this.y - t.ly) < this.r || Math.hypot(this.x - t.rx, this.y - t.ry) < this.r) 
                 return true
-            }
             return false
         }
     }
@@ -85,16 +84,17 @@ class CircleCollisionBox {
             // 原则：保证不碰撞（总碰撞则不动）
             if (t.collide_with_blks(s)) {
                 if (max_depth == 0) {
-                    if (anx == 0 && any == 0) return pair(0, 0) // 一直碰撞
-                    else return pair(anx, any) // 回退到上一次不碰撞
+                    if (anx == 0 && any == 0)
+                        return pair(0, 0) // 一直碰撞
+                    else
+                        return pair(anx, any) // 回退到上一次不碰撞
                 }
                 rx = mx
                 ry = my
             }
             else {
-                if (max_depth == 0) {
+                if (max_depth == 0)
                     return pair(mx, my)
-                }
                 anx = mx
                 any = my
                 lx = mx

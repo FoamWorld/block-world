@@ -18,7 +18,7 @@ class mould_table extends Solid {
     }
     onguiclose(x, y) { throwits(x, y) }
     updategui() {
-        localtemp.i.updategui(0, "localtemp.i", function () { }, function (i) { return (i == 0) ? "c" : "r" })
+        localtemp.i.updategui(0, "localtemp.i", () => { }, function (i) { return (i == 0) ? "c" : "r" })
     }
     work() {
         if (!(localtemp.i.i[1] instanceof EI)) { info_help("请先移走生成物"); return }

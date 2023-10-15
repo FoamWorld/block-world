@@ -12,7 +12,7 @@ class Block {
     get isRock() { return false }
     get isWood() { return false }
     get material() { return "" }
-    get text() { return textof(localsetting["l"], this.id) }
+    get text() { return text_translate(this.id) }
     static tr = false
     formblock() { return clone(this) }
     imgsource() {
@@ -21,6 +21,11 @@ class Block {
         return im
     }
     show(x, y) { draw.drawImage(this.imgsource(), x, y, bsz, bsz) }
+    showit(d) {
+        d.fillStyle = "slategray"
+        d.clearRect(0, 0, 32, 32)
+        this.showita(d)
+    }
     showita(d) {
         d.drawImage(this.imgsource(), 0, 0, bsz, bsz)
     }
@@ -33,7 +38,7 @@ class Block {
         // todo: 掉落物
         let list = this.drop(args)
         for (let pa of list)
-            ply.give(pa.a, pa.b)
+            ply.give(pa.first, pa.second)
     }
     onend(x, y) {
         if (this.hasgui && guix == x && guiy == y) {
@@ -93,6 +98,7 @@ class air extends NotSolid {
     onbegin() { }
     onend() { } // 加速，防止过多调用
 }
+function _air() { return new air() }
 function isair(x) { return (x instanceof air) }
 
 class border extends Solid {

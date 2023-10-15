@@ -28,7 +28,7 @@ else setting = {
     "username": "Anonymous",
 }
 container_to("menu", true)
-let inf_itemer = new 无限物品表()
+let inf_itemer = item("table_items")
 
 // 顶层函数
 function initgame() {
@@ -126,8 +126,8 @@ function append_feature() {
         let e = gid("events")
         for (let pair of eventstack) {
             e.append(createQElement("div", {
-                className: `message-box ${pair.a}-speak`,
-                innerHTML: pair.b
+                className: `message-box ${pair.first}-speak`,
+                innerHTML: pair.second
             }))
         }
         eventstack = []
@@ -194,11 +194,11 @@ function press_e() {
         return
     }
     var p = pos_by_showpos(mousex, mousey)
-    var t = ndim.blk(p.a, p.b)
+    var t = ndim.blk(p.first, p.second)
     if (t.constructor.hasgui) {
-        if (!ply.reachable(p.a, p.b)) return
-        guix = p.a
-        guiy = p.b
+        if (!ply.reachable(p.first, p.second)) return
+        guix = p.first
+        guiy = p.second
         t.onguiopen()
     }
 }
@@ -218,7 +218,7 @@ function press_i() {
     info_log(`时间 ${localsetting["t"] & 16383}`, "help")
     if (!(Number.isNaN(mousex) || Number.isNaN(mousey))) {
         let t = pos_by_showpos(mousex, mousey)
-        info_log(`指向坐标 (${t.a}, ${t.b})`, "help")
+        info_log(`指向坐标 (${t.first}, ${t.second})`, "help")
     }
     info_log(`玩家坐标 (${ply.x}, ${ply.y})`, "help")
 }
@@ -237,15 +237,15 @@ function mouseleave() {
 function mousedown(e) {
     if (pause) return
     var t = pos_by_showpos(e.offsetX, e.offsetY)
-    if (!ply.reachable(t.a, t.b)) return
-    tempx = t.a
-    tempy = t.b
-    if (ndim.blk(t.a, t.b).constructor.bk) {
+    if (!ply.reachable(t.first, t.second)) return
+    tempx = t.first
+    tempy = t.second
+    if (ndim.blk(t.first, t.second).constructor.bk) {
         mouseup_done = 3
-        userfill(t.a, t.b)
+        userfill(t.first, t.second)
     }
     else {
-        let tb = ndim.blk(t.a, t.b)
+        let tb = ndim.blk(t.first, t.second)
         var te = tb.hard
         var pe = ply.its.i[localsetting["chosen_itm"]].strength(tb)
         var time = 0
@@ -257,19 +257,19 @@ function mousedown(e) {
             time = (pe - te >= 20) ? 0 : (te - pe + 20) * 3
         }
         if (time == 0) {
-            userdestroy(t.a, t.b)
+            userdestroy(t.first, t.second)
             return
         }
         mouseup_done = 0
         var count = 0
-        let p = showpos_by_pos(t.a, t.b)
-        show_after_reg["d"] = `draw.drawImage(bimgs["dig0"],${p.a},${p.b},bsz,bsz)`
-        var interval = setInterval(function () {
+        let p = showpos_by_pos(t.first, t.second)
+        show_after_reg["d"] = `draw.drawImage(bimgs["dig0"],${p.first},${p.second},bsz,bsz)`
+        var interval = setInterval(() => {
             count++
             if (mouseup_done != 0) {
                 clearInterval(interval);
                 if (mouseup_done == 2) {
-                    if (count > time * 3) userdestroy(t.a, t.b)
+                    if (count > time * 3) userdestroy(t.first, t.second)
                     else {
                         info_help("挖掘时间不足")
                     }
@@ -279,12 +279,12 @@ function mousedown(e) {
             else if (count > time * 3) {
                 clearInterval(interval)
                 mouseup_done = 3
-                userdestroy(t.a, t.b)
+                userdestroy(t.first, t.second)
                 delete show_after_reg["d"]
             }
             else {
-                if (count == time * 2) show_after_reg["d"] = `draw.drawImage(bimgs["dig2"],${p.a},${p.b},bsz,bsz)`
-                else if (count == time) show_after_reg["d"] = `draw.drawImage(bimgs["dig1"],${p.a},${p.b},bsz,bsz)`
+                if (count == time * 2) show_after_reg["d"] = `draw.drawImage(bimgs["dig2"],${p.first},${p.second},bsz,bsz)`
+                else if (count == time) show_after_reg["d"] = `draw.drawImage(bimgs["dig1"],${p.first},${p.second},bsz,bsz)`
             }
         }, 10);
     }
@@ -292,7 +292,7 @@ function mousedown(e) {
 function mouseup(e) {
     if (mouseup_done == 3) return
     var t = pos_by_showpos(e.offsetX, e.offsetY)
-    if (t.a != tempx || t.b != tempy) { // 我看看谁会激活这玩意
+    if (t.first != tempx || t.second != tempy) { // 我看看谁会激活这玩意
         mouseup_done = 1
         info_help("不要边点边移")
         return

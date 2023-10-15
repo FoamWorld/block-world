@@ -14,13 +14,13 @@ class carving_table extends Solid {
     }
     onguiclose(x, y) { throwits(x, y) }
     updategui() {
-        localtemp.i.updategui(0, "localtemp.i", function () { }, function (i) { return (i == 0) ? "c" : "r" })
+        localtemp.i.updategui(0, "localtemp.i", () => { }, function (i) { return (i == 0) ? "c" : "r" })
         let it = localtemp.i.i[0]
         let li = carves_nor[it.id]
         if (li !== undefined) {
             let s = ""
             for (let i of li)
-                s += `<option value="${i}">${textof(localsetting["l"], i)}</option>`
+                s += `<option value="${i}">${text_translate(i)}</option>`
             gid("guo").innerHTML = s
         }
         else
@@ -29,7 +29,7 @@ class carving_table extends Solid {
     work() {
         if (!(localtemp.i.i[1] instanceof EI)) { info_help("请先移走生成物"); return }
         let v = gid("guo").value
-        let it = guess_itm(v)
+        let it = guess_object(v)
         localtemp.i.i[1] = it
         let inn = localtemp.i.getn(0)
         let oun = Math.min(inn, it.constructor.stack)

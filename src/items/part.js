@@ -11,7 +11,9 @@ class Part extends Item {
         d.putImageData(c, 0, 0)
     }
 }
-class ingot extends Part { }
+class ingot extends Part {
+    get amount() { return 0.125 }
+}
 class lamina extends Part {
     get amount() { return 0.25 }
     showita(d) {

@@ -48,5 +48,6 @@
 | 名称 | 含义 |
 | :-: | :-: |
 | `formblock()` | 成块（不能为 `null`） |
-| `showita(d)` | 物品显示 |
+| `showit(d)` | 物品栏显示物品 |
+| `showita(d)` | 辅助 `showit` |
 | `strength(tar)` | 作用于 `tar` 的强度 |

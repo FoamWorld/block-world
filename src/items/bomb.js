@@ -6,7 +6,7 @@ class bomb extends Item {
     onunuse() {
         if (Number.isNaN(mousex) || Number.isNaN(mousey)) return
         let t = pos_by_showpos(mousex, mousey)
-        let x = t.a, y = t.b
+        let x = t.first, y = t.second
         for (let rx = -2; rx <= 2; rx++) {
             for (let ry = -2; ry <= 2; ry++) {
                 if (rx == 0 && ry == 0) continue

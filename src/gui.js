@@ -36,15 +36,15 @@ function menu_load(par) { // 主菜单
     let but1 = document.createElement("button")
     but1.innerText = "设置"
     but1.className = "menu_button"
-    but1.onclick = function () { container_to("setting") }
+    but1.onclick = () => container_to("setting")
     let but2 = document.createElement("button")
     but2.innerText = "创建新世界"
     but2.className = "menu_button"
-    but2.onclick = function () { container_to("intend_new_game") }
+    but2.onclick = () => container_to("intend_new_game")
     let but3 = document.createElement("button")
     but3.innerText = "打开存档"
     but3.className = "menu_button"
-    but3.onclick = function () { container_to("intend_open") }
+    but3.onclick = () => container_to("intend_open")
     par.replaceChildren(div, but1, document.createElement("br"), but2, document.createElement("br"), but3)
 }
 function setting_load(par) { // 设置
@@ -52,9 +52,7 @@ function setting_load(par) { // 设置
     div.append(
         ...append_setting_input("设置用户名", { id: "set-username", type: "text", size: "10", value: "Anonymous" }),
         createQElement("button", {
-            innerText: "确认", onclick: function () {
-                setting["username"] = gid("set-username").value
-            }
+            innerText: "确认", onclick: () => setting["username"] = gid("set-username").value
         })
     )
     for (let i of setting_chs) {
@@ -66,7 +64,7 @@ function setting_load(par) { // 设置
         let _o = document.createElement("button")
         _o.id = `${i[1]}%o`
         _o.className = "o_check"
-        _o.onclick = function () { setting_checkbox(i[1]) }
+        _o.onclick = () => setting_checkbox(i[1])
         _o.style.backgroundColor = t ? "#0078D4" : "#FFFFFF"
         let _i = document.createElement("span")
         _i.id = `${i[1]}%i`
@@ -85,7 +83,7 @@ function intend_new_game_load(par) {// 新世界设置
         ...append_setting_selection("设置模式", { id: "set-mode" }, { "s": "生存", "c": "创造", }),
         ...append_setting_input("输入种子", { id: "set-worldseed", type: "number", size: "8", value: "0" }),
         ...append_setting_selection("设置地形", { id: "set-generator" }, { debug: "调试", _empty: "空", _infmaze: "无限迷宫" }),
-        createQElement("button", { type: "submit", form: "newgame", innerText: "创建新世界", onclick: function () { new_game() } })
+        createQElement("button", { type: "submit", form: "newgame", innerText: "创建新世界", onclick: () => new_game() })
     )
     par.replaceChildren(div)
 }

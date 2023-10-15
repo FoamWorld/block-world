@@ -39,19 +39,11 @@ function anti_html(s) {
     }
     return t
 }
-function guess_itm(s) {
-    let i = jump2itm[s]
-    if (i != undefined) s = i
-    i = name2itm[s]
-    if (i != undefined) return decode(`(${i})`)
-    var t = getblkbystr(s)
-    if (t instanceof Block) {
-        return new IFB(t)
-    }
-    else return t
-}
-function guess_blk(s) {
-    return getblkbystr(s)
+function guess_object(s) {
+    let f = s.indexOf('[')
+    if (f == -1)
+        return item(s)
+    let name = s.substring(0, f)
 }
 function guess_blkpos(s, t) {
     if (s[0] == '~') {
@@ -82,7 +74,7 @@ function cmd_fill(...t) {
     let rx = guess_blkpos(t[2], ply.x), ry = guess_blkpos(t[3], ply.y)
     if (lx > rx) { let t = lx; lx = rx; rx = t; }
     if (ly > ry) { let t = ly; ly = ry; ry = t; }
-    let b = guess_blk(t[4])
+    let b = guess_object(t[4])
     for (let i = lx; i <= rx; i++) {
         for (let j = ly; j <= ry; j++) {
             makeblk(i, j, b)
@@ -90,7 +82,7 @@ function cmd_fill(...t) {
     }
 }
 function cmd_gamemode(m) { setgamemode(m) }
-function cmd_give(i, n) { ply.give(guess_itm(i), n) }
+function cmd_give(i, n) { ply.give(guess_object(i), n) }
 function cmd_say(s = "") { info_log(anti_html(s), "user") }
 function cmd_seed() { info_log(localsetting["seed"]) }
 function cmd_show(i) { info_log(encode(eval(i))) }

@@ -1,13 +1,7 @@
 /* 文字数据 */
-function text_translate() {
-}
-/* 称谓数据 */
-function getblkbystr(s) {
-    let t = jump2blk[s]
-    if (t != undefined) { s = t }
-    t = name2blk[s]
-    if (t == undefined) return decode(`(${s})`)
-    else return decode(`(${t})`)
+function text_translate(...args) {
+    // localsetting["lang"]
+    return ""
 }
 /* 材质数据 */
 var bimgn = [

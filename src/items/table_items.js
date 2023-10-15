@@ -44,8 +44,8 @@ class table_items extends Item {
 		let pre = []
 		gid("guco").replaceChildren()
 		for (let i = 0; i < l; i++) {
-			let it = guess_itm(co[i])
-			gid("guco").append(item_board(i, "it0", it.text()))
+			let it = guess_object(co[i])
+			gid("guco").append(item_board(i, "it0", it.text))
 			if (i % 8 == 7) gid("guco").append(document.createElement("br"))
 			pre.push(it)
 		}

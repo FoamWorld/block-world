@@ -38,7 +38,7 @@ function antiwpos(s) {
 
 class Chunk { // 区块：64x64
     constructor() {
-        this.blk = arrayof(64, function () { return [] })
+        this.blk = arrayof(64, () => [])
         this.lig = new Uint8Array(2048) // 压缩空间
         this.tm = 0 // 记录离开时间
     }
@@ -52,12 +52,12 @@ class Chunk { // 区块：64x64
     }
     generate_debug(x, y) { // 调试用生成器
         for (let i = 0; i < 64; i++) {
-            for (let j = 0; j < 64; j++)this.blk[i][j] = block("air")
+            for (let j = 0; j < 64; j++)this.blk[i][j] = _air()
         }
     }
     generate__empty(x, y) {
         for (let i = 0; i < 64; i++) {
-            for (let j = 0; j < 64; j++)this.blk[i][j] = block("air")
+            for (let j = 0; j < 64; j++)this.blk[i][j] = _air()
         }
     }
     generate(x, y) {
@@ -232,17 +232,17 @@ function removeblk(x, y, force = false) {
     let ch = ndim.chk(lx, ly)
     ch.blk[tx][ty].onend(x, y)
     if (!force && ch.blk[tx][ty].onbroken(x, y, null) === false) return
-    ch.blk[tx][ty] = block("air")
-    pushsave(lx, ly, tx, ty, block("air"))
+    ch.blk[tx][ty] = _air()
+    pushsave(lx, ly, tx, ty, _air())
 }
-function setblk(x, y, o = block("air")) {
+function setblk(x, y, o = _air()) {
     var tx = x & 63, ty = y & 63
     var lx = x - tx, ly = y - ty
     let ch = ndim.chk(lx, ly)
     ch.blk[tx][ty] = o
     pushsave(lx, ly, tx, ty, o)
 }
-function makeblk(x, y, o = block("air"), force = true, pue = false) {
+function makeblk(x, y, o = _air(), force = true, pue = false) {
     var tx = x & 63, ty = y & 63
     var lx = x - tx, ly = y - ty
     let ch = ndim.chk(lx, ly)

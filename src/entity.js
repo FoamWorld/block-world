@@ -40,8 +40,8 @@ class Player {
     stepl() { return localsetting["step"] }
     move(x, y) {
         var v = new CircleCollisionBox(this.x, this.y, 0.4375).move_to_blks(ndim, x, y)
-        this.x += v.a
-        this.y += v.b
+        this.x += v.first
+        this.y += v.second
         if (Math.hypot(this.x - guix, this.y - guiy) > 3) {
             closebgui()
             info_help("你远离了打开的交互方块")
@@ -52,7 +52,7 @@ class Player {
         plyby = (plyly >> 6) << 6
         for (let k of Object.keys(ndim.dim)) {
             let pa = antiwpos(k)
-            if (Math.abs(pa.a - plybx) <= 128 && Math.abs(pa.b - plyby) <= 128) {
+            if (Math.abs(pa.first - plybx) <= 128 && Math.abs(pa.second - plyby) <= 128) {
                 ndim.dim[k].tm = 0
             }
             else {

@@ -78,7 +78,7 @@ function clone(obj) {
 }
 // js 连这都没
 class Pair {
-    constructor(a, b) { this.a = a; this.b = b }
+    constructor(a, b) { this.first = a; this.second = b }
 }
 function pair(a, b) { return new Pair(a, b) }
 function gid(s) {
@@ -157,7 +157,7 @@ function setgamemode(s) {
 class IB { // 简易物品栏管理器
     constructor(l, i, n) {// 长度 物品 计数
         this.l = l
-        this.i = i === undefined ? arrayof(l, function () { return new EI() }) : i
+        this.i = i === undefined ? arrayof(l, () => new EI()) : i
         this.n = n === undefined ? new Uint8Array((l + 1) >> 1) : n // 最大允许堆叠 16
     }
     getn(id) {
@@ -170,24 +170,24 @@ class IB { // 简易物品栏管理器
         return pair(this.i[id], this.getn(id))
     }
     set(id, v) {
-        this.i[id] = v.a
-        this.setn(id, v.b)
+        this.i[id] = v.first
+        this.setn(id, v.second)
     }
     remove(id) {
         this.i[id] = new EI()
         this.setn(id, 0)
     }
     clear() {
-        this.i = arrayof(this.l, function () { return new EI() })
+        this.i = arrayof(this.l, () => new EI())
         this.n = new Uint8Array((this.l + 1) >> 1)
     }
-    html(par, e = 0, style = "it0", spec = function () { }) { // 偏移量
+    html(par, e = 0, style = "it0", spec = () => { }) { // 偏移量
         for (let i = 0; i < this.l; i++) {
-            par.appendChild(item_board(i + e, style, this.i[i].text()))
+            par.appendChild(item_board(i + e, style, this.i[i].text))
             spec(par, i)
         }
     }
-    updategui(e = 0, access = "ndim.blk(guix,guiy).its", spec = function () { }, type = function () { return "c" }) {
+    updategui(e = 0, access = "ndim.blk(guix,guiy).its", spec = () => { }, type = () => "c") {
         for (let i = 0; i < this.l; i++) {
             let d = gid(i + e).getContext("2d")
             this.i[i].showit(d)
