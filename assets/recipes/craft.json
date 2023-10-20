@@ -1,0 +1,10 @@
+{
+	"normal": [
+		[[1], ["sky_log"], "sky_plank"],
+    	[[1], ["sky_plank"], "stick", 9],
+    	[[3], ["sky_plank", "sky_plank"], "lamina[mat='sky_wood']", 4],
+    	[[3, 3], ["sky_plank", "!", "!", "!"], "crafting_table"],
+    	[[3, 3], ["sky_plank", "!", "sky_wood_lamina", "!"], "carving_table"],
+    	[[3, 3, 3], ["sky_plank", "!", "stick", "!", "sky_plank", "!"], "chest"]
+	]
+}

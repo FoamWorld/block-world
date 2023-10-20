@@ -29,6 +29,7 @@ class Block {
     showita(d) {
         d.drawImage(this.imgsource(), 0, 0, bsz, bsz)
     }
+    strength(tar) { return 15 }
     putextra() { }
     update(x, y) { }
     onguiclose() { }

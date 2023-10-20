@@ -8,6 +8,7 @@ class half_block extends Block {
     get hard() { return materials[this.mat]["hard"] }
     get id() { return this.mat + "_half_block" }
     static hastrans = true
+    get text() { return text_translate(this.mat, "half_block") }
     show(x, y) {
         let t = materials[this.mat]["theme"]
         draw.fillStyle = `rgb(${t[0]},${t[1]},${t[2]})`

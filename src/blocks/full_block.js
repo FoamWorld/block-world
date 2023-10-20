@@ -3,6 +3,7 @@ class full_block extends Solid {
     get amount() { return 1 }
     get hard() { return materials[this.mat]["hard"] }
     get id() { return this.mat + "_block" }
+    get text() { return text_translate(this.mat, "full_block") }
     show(x, y) {
         let im = bimgs[this.id]
         if (im === undefined) {

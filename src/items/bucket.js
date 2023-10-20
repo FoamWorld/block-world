@@ -7,6 +7,12 @@ class bucket extends Item {
 		else
 			return this.content.id + "_bucket"
 	}
+	get text() {
+		if (oftype(this.content, "air"))
+			return text_translate("empty_bucket")
+		else
+			return text_translate(this.content.id, "bucket")
+	}
 	static stack = 1
 	static useonce = true
 	set tID(t) {

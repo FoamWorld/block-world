@@ -10,12 +10,12 @@ const inf_item_names = {
 	],
 	"resources": [
 		"stick",
-		"sky_plank", "sky_lamina",
+		"sky_plank", "lamina[mat='sky']",
 		"full_block[mat='iron']", "full_block[mat='gold']", "full_block[mat='copper']", "full_block[mat='clay']", "full_block[mat='ceramic']",
 		"ingot[mat='iron']", "ingot[mat='gold']", "ingot[mat='copper']",
 	],
-	"work spaces": ["chest", "crafting_table", "craving_table", "mould_table"],
-	"tools": ["bucket[tID=0]", "bucket[tID=1]", "bucket[tID=2]", "book"],
+	"work spaces": ["chest", "crafting_table", "carving_table", "mould_table"],
+	"tools": ["bucket[tID=0]", "bucket[tID=1]", "bucket[tID=2]", "lighter", "book"],
 	"administered": ["air", "border", "wall", "structure_block", "bomb", "fire"],
 }
 class table_items extends Item {
@@ -24,12 +24,15 @@ class table_items extends Item {
 	onuse() {
 		let inf_item_keys = Object.keys(inf_item_names)
 		let gui = zbox_gui2()
-		gui.innerHTML = `<div id="guch"></div><div id="guco"></div>`
-		let s = ""
-		for (let i of inf_item_keys) {
-			s += `<button id="gu_${i}" class="unselected" onclick="nit.tab_to('${i}')">${i}</button>`
-		}
-		gid("guch").innerHTML = s
+		let guch = createQElement("div", { id: "guch" })
+		for (let i of inf_item_keys)
+			guch.append(createQElement("button", {
+				id: `gu_${i}`,
+				className: "unselected",
+				onclick: () => nit.tab_to(i),
+				innerText: i
+			}))
+		gui.append(guch, createQElement("div", { id: "guco" }))
 		localtemp["gui"]["ch"] = ""
 		this.tab_to(inf_item_keys[0])
 	}

@@ -1,8 +1,9 @@
 class Part extends Item {
     constructor(mat) { super(); this.mat = mat }
     get id() { return this.mat + this.constructor.name }
+    get text() { return text_translate(this.mat, this.constructor.name) }
     showita(d) {
-        let id = this.id()
+        let id = this.id
         let c = bcaches[id]
         if (c === undefined) {
             c = inner_load_mould(this.constructor.name, this.mat)

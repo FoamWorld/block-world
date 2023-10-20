@@ -102,7 +102,7 @@ function decode(s) {
         }
         return ans
     }
-    else if (t == "{") { // 推测Object
+    else if (t == "{") { // 推测 Object
         var l = s.length
         var stack = 0, instr = false, ans = {}, last = 1, tempkey
         for (let i = 1; i < l - 1; i++) {

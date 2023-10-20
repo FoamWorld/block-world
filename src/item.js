@@ -50,7 +50,7 @@ function drop(e) {
             }
         }
     }
-    else if (f1.first.id() == f2.first.id()) { // 相同叠加
+    else if (f1.first.id == f2.first.id) { // 相同叠加
         let st = f2.first.constructor.stack
         if (st == f2.second) return
         if (ref_type[drag_from] == "i") ref_set[drag_to](drag_to, pair(f2.first, f2.second + 1))

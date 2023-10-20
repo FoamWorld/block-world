@@ -44,6 +44,39 @@ function guess_object(s) {
     if (f == -1)
         return item(s)
     let name = s.substring(0, f)
+    let argstr = s.substring(f + 1, s.length - 1)
+    let l = argstr.length, instr = ""
+    let ans = {}, last, tempkey
+    for (let i = 0; i < l; i++) {
+        let char = argstr.charAt(i)
+        if (instr != "") {
+            if (char == instr) {
+                instr = ""
+                if (tempkey == "")
+                    tempkey = argstr.substring(last, i)
+            }
+        }
+        else if (char == "\"" || char == "'") {
+            instr = char
+            last = i + 1
+        }
+        else if ((char >= 'a' && char <= 'z') ||
+            (char >= 'A' && char <= 'Z') ||
+            (char >= '0' && char <= '9') ||
+            char == "_") {
+            ;
+        }
+        else if (char == ",") {
+            tempkey = ""
+        }
+        else if (char == "=") {
+            decode_continue()
+        }
+    }
+    if (last != l - 1) {
+        ans[tempkey] = decode(s.slice(last, l - 1))
+    }
+    return item(name, ans)
 }
 function guess_blkpos(s, t) {
     if (s[0] == '~') {

@@ -213,7 +213,7 @@ class IB { // 简易物品栏管理器
         if (n == 0) return
         let last = n
         let st = it.constructor.stack
-        let itid = it.id()
+        let itid = it.id
         for (let i = 0; i < this.l; i++) {
             if (last == 0) return 0
             if (this.i[i] instanceof EI) {
@@ -227,7 +227,7 @@ class IB { // 简易物品栏管理器
                     return 0
                 }
             }
-            else if (st != 1 && this.i[i].id() == itid) {
+            else if (st != 1 && this.i[i].id == itid) {
                 let orin = this.getn(i)
                 if (orin == st) continue // 很有可能发生
                 if (orin + last < st) {

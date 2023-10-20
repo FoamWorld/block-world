@@ -51,7 +51,7 @@ function inner_craft(its, lin = 3, col = 3) {
     let ar = arrayof(lin, () => [])
     for (let i = 0; i < lin; i++) {
         for (let j = 0; j < col; j++) {
-            ar[i][j] = its[i * col + j].id()
+            ar[i][j] = its[i * col + j].id
         }
     }
     // 移到左上角
@@ -87,6 +87,7 @@ function inner_craft(its, lin = 3, col = 3) {
         }
     }
     // 依次检查
+    // 必须组成指定图形，不允许旋转，但允许平移
     for (let c of crafts_nor) {
         let pat = c[0], co = 0, fl = false, prev
         let patl = pat.length

@@ -20,7 +20,6 @@ class wooden_sign extends NotSolid {
                 }
             })
         )
-        gui.innerHTML = `<input id="gus" type="text" size="8" placeholder="内容"><input id="guc" type="color"><button onclick="ndim.blk(${guix},${guiy}).set()">设置</button>`
         this.updategui()
         inputting2 = true
     }
