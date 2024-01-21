@@ -50,7 +50,8 @@ function menu_load(par) { // 主菜单
 function setting_load(par) { // 设置
     let div = createQElement("div", { id: "checker", className: "textarea-ink" })
     div.append(
-        ...append_setting_input("设置用户名", { id: "set-username", type: "text", size: "10", value: "Anonymous" }),
+        createQElement("span", { innerText: "设置用户名" }),
+        createQElement("input", { id: "set-username", type: "text", size: "10", value: "Anonymous" }),
         createQElement("button", {
             innerText: "确认", onclick: () => setting["username"] = gid("set-username").value
         })

@@ -46,6 +46,7 @@
 .d_check {
     position: relative;
     display: inline-block;
+    margin-left: 5px;
 }
 
 .o_check {
@@ -60,7 +61,7 @@
     position: absolute;
     transition: all .1s ease;
     pointer-events: none;
-    top: 5px;
+    top: 6px;
     border-radius: 10px;
     width: 10px;
     height: 10px;

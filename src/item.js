@@ -102,7 +102,7 @@ class Item {
 function item(className, args = {}) {
     let it = eval(`new ${className}()`)
     for (let key in args) {
-        eval(`it.${key}=${args.key}`)
+        it[key] = args[key]
     }
     return it
 }

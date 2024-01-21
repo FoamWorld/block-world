@@ -31,12 +31,17 @@ class bucket extends Item {
 			}
 		}
 	}
+	showita(d) {
+		let im = bimgs[this.id]
+		if (im == undefined) im = bimgs["notexture"]
+		d.drawImage(im, 0, 0, 32, 32)
+	}
 	onuse() {
 		if (Number.isNaN(mousex) || Number.isNaN(mousey)) return
 		let t = pos_by_showpos(mousex, mousey)
 		let b = ndim.blk(t.first, t.second)
 		if (isair(this.content)) {
-			if (oftype(b, "water") || oftype(b, "lava")) {
+			if ((oftype(b, "water") || oftype(b, "lava")) && b.tmp == 3) {
 				if (!localsetting["inf-use"])
 					this.content = b
 				removeblk(t.first, t.second)

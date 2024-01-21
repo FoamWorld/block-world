@@ -84,21 +84,26 @@ function guess_blkpos(s, t) {
     }
     else return Number(s)
 }
+
+var errorMessage = ""
 function work_command(s) {
     if (s == "") return
+    errorMessage = ""
     try {
         var t = split_cmd(s)
         let cn = t[0]
         t.shift(1)
         let cnc = globalThis["cmd_" + cn]
-        if (cnc == undefined) {
-            throw new Error(`未知指令 "${cn}"`)
-        }
-        else cnc.call(null, ...t)
+        if (cnc == undefined)
+            errorMessage = `未知指令 "${cn}"`
+        else
+            cnc.call(null, ...t)
     }
     catch (e) {
         info_log(e, "error")
     }
+    if (errorMessage != "")
+        info_log(errorMessage, "error")
 }
 function cmd_clear() { gid("events").replaceChildren() }
 function cmd_eval(i) { eval(i) }

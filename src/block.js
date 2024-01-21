@@ -34,7 +34,7 @@ class Block {
     update(x, y) { }
     onguiclose() { }
     onbegin(x, y) { }
-    drop(args) { return [pair(new IFB(this), 1)] }
+    drop(args) { return [pair(this, 1)] }
     onbroken(x, y, args) {
         // todo: 掉落物
         let list = this.drop(args)
@@ -76,7 +76,7 @@ class Block {
 function block(className, args = {}) {
     let blk = eval(`new ${className}()`)
     for (let key in args) {
-        eval(`blk.${key}=${args.key}`)
+        blk[key] = args[key]
     }
     return blk
 }

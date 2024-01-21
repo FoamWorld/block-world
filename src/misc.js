@@ -209,7 +209,7 @@ class IB { // 简易物品栏管理器
         if (n < orin) this.setn(id, orin - n)
         else this.i[id] = new EI()
     }
-    give(it, n) {
+    give(it, n = 1) {
         if (n == 0) return
         let last = n
         let st = it.constructor.stack

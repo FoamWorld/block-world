@@ -7,7 +7,7 @@ class sky_leaf extends NotSolid {
 	static bk = false
 	get hard() { return 15 }
 	get isBurnable() { return true }
-	drop() { return [pair(new IFB(new sky_sapling()), grand() % 2)] }
+	drop() { return [pair(new sky_sapling(), grand() % 2)] }
 }
 class sky_plank extends Solid {
     get hard() { return 25 }

@@ -51,14 +51,22 @@ class Chunk { // 区块：64x64
         (y & 1) == 0 ? this.lig[id] = this.lig[id] & 15 | (v << 4) : this.lig[id] = this.lig[id] & 240 | v
     }
     generate_debug(x, y) { // 调试用生成器
-        for (let i = 0; i < 64; i++) {
-            for (let j = 0; j < 64; j++)this.blk[i][j] = _air()
+        for (let i = 0; i < 64; i++)
+            for (let j = 0; j < 64; j++)
+                this.blk[i][j] = _air()
+        if (x == 0 && y == 0) {
+            let c = new chest()
+            c.give(new bucket(new water()))
+            c.give(new bucket(new lava()))
+            c.give(new vine(), 15)
+            c.give(new sky_sapling(), 15)
+            this.blk[0][0] = c
         }
     }
     generate__empty(x, y) {
-        for (let i = 0; i < 64; i++) {
-            for (let j = 0; j < 64; j++)this.blk[i][j] = _air()
-        }
+        for (let i = 0; i < 64; i++)
+            for (let j = 0; j < 64; j++)
+                this.blk[i][j] = _air()
     }
     generate(x, y) {
         eval(`this.generate_${localsetting["type"]}(${x},${y})`)
