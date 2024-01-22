@@ -1,22 +1,22 @@
 const inf_item_names = {
-	"natural": [
+	"nature": [
 		"stone", "sand", "ice", "andesite", "basalt", "granite", "fluorite"
 	],
-	"decorations": [
+	"decoration": [
 		"grow_powder",
 		"sky_leaf", "sky_log", "sky_sapling",
 		"vine", "vine_grow",
 		"sponge", "wooden_sign", "glass"
 	],
-	"resources": [
+	"resource": [
 		"stick",
 		"sky_plank", "lamina[mat='sky']",
 		"full_block[mat='iron']", "full_block[mat='gold']", "full_block[mat='copper']", "full_block[mat='clay']", "full_block[mat='ceramic']",
 		"ingot[mat='iron']", "ingot[mat='gold']", "ingot[mat='copper']",
 	],
-	"work spaces": ["chest", "crafting_table", "carving_table", "mould_table"],
-	"tools": ["bucket[tID=0]", "bucket[tID=1]", "bucket[tID=2]", "lighter", "book"],
-	"administered": ["air", "border", "wall", "structure_block", "bomb", "fire"],
+	"work space": ["chest", "crafting_table", "carving_table", "mould_table"],
+	"tool": ["bucket[tID=0]", "bucket[tID=1]", "bucket[tID=2]", "lighter", "book"],
+	"admin": ["air", "border", "wall", "structure_block", "bomb", "fire"],
 }
 class table_items extends Item {
 	static canuse = true
@@ -30,7 +30,7 @@ class table_items extends Item {
 				id: `gu_${i}`,
 				className: "unselected",
 				onclick: () => nit.tab_to(i),
-				innerText: i
+				innerText: text_translate(i)
 			}))
 		gui.append(guch, createQElement("div", { id: "guco" }))
 		localtemp["gui"]["ch"] = ""

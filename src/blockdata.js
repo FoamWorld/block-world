@@ -19,7 +19,7 @@ function text_translate(...args) {
         if (lang == "en")
             local = text.replace('_', ' ')
         else if (lang == "zh") {
-            for (let clas of ["blocks", "items", "materials", "miscs"]) {
+            for (let clas of ["blocks", "items", "classification", "materials", "miscs"]) {
                 if (local !== undefined) break
                 local = zh_translation_data[clas][text]
             }

@@ -25,14 +25,14 @@ class Player {
         this.updategui()
     }
     changechosen(to) {
-        if (localsetting["chosen_itm"] == to) return
-        gid(localsetting["chosen_itm"] - 8).style.border = "1px solid silver"
+        if (localsetting["choose-id"] == to) return
+        gid(localsetting["choose-id"] - 8).style.border = "1px solid silver"
         gid(to - 8).style.border = "2px solid lightcyan"
-        localsetting["chosen_itm"] = to
+        localsetting["choose-id"] = to
     }
     updategui() {
         this.its.updategui(-8, "ply.its", function (i) {
-            if (i == localsetting["chosen_itm"]) gid(i - 8).style.border = "2px solid lightcyan"
+            if (i == localsetting["choose-id"]) gid(i - 8).style.border = "2px solid lightcyan"
             else gid(i - 8).style.border = "1px solid silver"
         })
     }

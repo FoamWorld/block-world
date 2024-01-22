@@ -1,5 +1,5 @@
 // 顶层数据
-const VERSION = "0.4.0"
+const VERSION = "0.5.0"
 var manager_interval // 控制流程函数
 var mousex, mousey // 当前鼠标 canvas 坐标
 var tempx, tempy
@@ -21,7 +21,7 @@ bimgs["dig2"] = srcimg("dig2.png")
 bimgs["notexture"] = srcimg("notexture.png")
 if (localStorage.getItem("%setting") != null) setting = JSON.parse(localStorage.getItem("%setting"))
 else setting = {
-    "auto_save": true,
+    "auto-save": true,
     "show-event": true,
     "show-help": true,
     "st": {}, // 结构保存
@@ -58,7 +58,7 @@ function new_game() { // 载入 game_html 时
     saved = {}
     var se = parseInt(gid("set-worldseed").value)
     localsetting = { // 世界设置
-        "chosen_itm": 0,
+        "choose-id": 0,
         "cmdf": {},
         "focus_mouse": true,
         "l": "zh_CN",
@@ -204,7 +204,7 @@ function press_e() {
 }
 function press_f() {
     close_itemuse()
-    let t = ply.its.i[localsetting["chosen_itm"]]
+    let t = ply.its.i[localsetting["choose-id"]]
     if (t.constructor.canuse) {
         if (!t.constructor.useonce) nit = t
         t.onuse()
@@ -212,7 +212,7 @@ function press_f() {
 }
 function press_q() {
     close_itemuse()
-    ply.its.remove(localsetting["chosen_itm"])
+    ply.its.remove(localsetting["choose-id"])
 }
 function press_i() {
     info_log(`时间 ${localsetting["t"] & 16383}`, "help")
@@ -247,7 +247,7 @@ function mousedown(e) {
     else {
         let tb = ndim.blk(t.first, t.second)
         var te = tb.hard
-        var pe = ply.its.i[localsetting["chosen_itm"]].strength(tb)
+        var pe = ply.its.i[localsetting["choose-id"]].strength(tb)
         var time = 0
         if (!localsetting["break-all"]) {
             if (te - pe > 15) {
@@ -300,12 +300,12 @@ function mouseup(e) {
     mouseup_done = 2
 }
 function userfill(x, y) {
-    var i = ply.its.i[localsetting["chosen_itm"]]
+    var i = ply.its.i[localsetting["choose-id"]]
     let b = i.formblock()
     if (b !== null) {
         makeblk(x, y, b, true, true)
         if (!localsetting["inf-item"]) {
-            ply.its.reduce(localsetting["chosen_itm"], 1)
+            ply.its.reduce(localsetting["choose-id"], 1)
         }
     }
     mouseup_done = 3
@@ -354,5 +354,5 @@ function resize() {
 // 存储
 function savegame() {
     localStorage.setItem("%setting", JSON.stringify(setting))
-    if (setting["auto_save"] && curpage == "game") saveworld()
+    if (setting["auto-save"] && curpage == "game") saveworld()
 }

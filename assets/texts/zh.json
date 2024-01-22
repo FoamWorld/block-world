@@ -32,6 +32,14 @@
 		"water": "水",
 		"wooden_sign": "告示牌"
 	},
+	"classification": {
+		"nature": "自然",
+		"decoration": "装饰",
+		"resource": "资源",
+		"work space": "工作区",
+		"tool": "工具",
+		"admin": "权限"
+	},
 	"items": {
 		"bomb": "炸弹",
 		"book": "书",

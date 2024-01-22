@@ -23,11 +23,11 @@ class mould_table extends Solid {
     work() {
         if (!(localtemp.i.i[1] instanceof EI)) { info_help("请先移走生成物"); return }
         let ini = localtemp.i.i[0]
-        if (!(ini instanceof 薄板)) { info_help("请使用薄板"); return }
+        if (!oftype(ini, "lamina")) { info_help("请使用薄板"); return }
         if (ini.mat.constructor.hard > 35) { info_help("材质太硬"); return }
         let mater = ini.t_mat()
         let v = gid("guo").value
-        let it = new 模具(v, mater)
+        let it = new mould(v, mater)
         localtemp.i.i[1] = it
         let inn = localtemp.i.getn(0)
         let oun = Math.min(inn, it.constructor.stack)
