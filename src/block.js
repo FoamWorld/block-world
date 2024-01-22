@@ -104,6 +104,7 @@ function isair(x) { return (x instanceof air) }
 
 class border extends Solid {
     get hard() { return Infinity }
+    showita(d) { d.fillStyle = "#99d9ea"; d.fillRect(0, 0, bsz, bsz) }
     show(x, y) {
         draw.fillStyle = "#99d9ea"
         draw.fillRect(x, y, bsz, bsz)

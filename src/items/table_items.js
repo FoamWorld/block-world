@@ -62,7 +62,9 @@ class table_items extends Item {
 		for (let i = 0; i < l; i++) {
 			let d = gid(i).getContext("2d")
 			pre[i].showit(d)
-			eval(`ref_get[i]=function(x){return pair(localtemp["gui"]["p"][x],1)}`)
+			ref_get[i] = function (x) {
+				return pair(localtemp["gui"]["p"][x], 1)
+			}
 			ref_type[i] = "i"
 		}
 	}

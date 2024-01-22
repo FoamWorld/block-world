@@ -35,7 +35,7 @@ class crafting_table extends Solid {
         let it = guess_object(tr.first)
         let mh = Math.floor(it.constructor.stack / tr.second)
         if (mh == 0) {
-            info_log(`发现设计问题，请告知开发者`)
+            info_log("设计问题：物品堆叠量过小", "error")
             return
         }
         for (let i = 0; i < 9; i++)if (!(localtemp.i.i[i] instanceof EI)) mh = Math.min(mh, localtemp.i.getn(i))

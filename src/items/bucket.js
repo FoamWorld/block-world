@@ -34,7 +34,7 @@ class bucket extends Item {
 	showita(d) {
 		let im = bimgs[this.id]
 		if (im == undefined) im = bimgs["notexture"]
-		d.drawImage(im, 0, 0, 32, 32)
+		d.drawImage(im, 0, 0, bsz, bsz)
 	}
 	onuse() {
 		if (Number.isNaN(mousex) || Number.isNaN(mousey)) return
