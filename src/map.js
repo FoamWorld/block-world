@@ -50,25 +50,7 @@ class Chunk { // 区块：64x64
         let id = (x << 5) | (y >> 1);
         (y & 1) == 0 ? this.lig[id] = this.lig[id] & 15 | (v << 4) : this.lig[id] = this.lig[id] & 240 | v
     }
-    generate_debug(x, y) { // 调试用生成器
-        this.blk[0][0] = _air()
-        for (let i = 1; i < 64; i++) {
-            this.blk[i][0] = new border()
-            this.blk[0][i] = new border()
-        }
-        for (let i = 1; i < 64; i++)
-            for (let j = 1; j < 64; j++)
-                this.blk[i][j] = _air()
-        if (x == 0 && y == 0) {
-            let c = new chest()
-            c.give(new bucket(new water()))
-            c.give(new bucket(new lava()))
-            c.give(new vine(), 15)
-            c.give(new sky_sapling(), 15)
-            this.blk[1][1] = c
-        }
-    }
-    generate__empty(x, y) {
+    generate_empty(x, y) {
         for (let i = 0; i < 64; i++)
             for (let j = 0; j < 64; j++)
                 this.blk[i][j] = _air()
@@ -203,8 +185,12 @@ function initdim() {
 function initgenerator() {
     globalThis["initgen_" + localsetting["type"]].call()
 }
-function initgen_debug() { ply = new Player(1.8, 1.8) }
-function initgen__empty() { ply = new Player(0, 0) }
+function initgen_debug() {
+    ply = new Player(1.8, 1.8)
+    localsetting["t"] = 6000
+    localsetting["tmove"] = false
+}
+function initgen_empty() { ply = new Player(0, 0) }
 function pregenerate() {
     var px = 64 * Math.floor(ply.x / 64), py = 64 * Math.floor(ply.y / 64)
     for (let i = px - 128; i <= px + 128; i += 64) {

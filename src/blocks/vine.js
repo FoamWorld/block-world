@@ -1,4 +1,5 @@
 class vine extends Solid {
+    constructor() { super(); this.tmp = 0 }
     get hard() { return 5 }
     get isBurnable() { return true }
     update(x, y) {

@@ -7,7 +7,7 @@ Chunk.prototype.setblk2 = function (x, y, sz, block) {
     }
 }
 */
-Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割（原因：直线多）
+Chunk.prototype.generate_infmaze_4 = function (lx, ly, rx, ry) {// 递归分割（原因：直线多）
     let x0 = rx - lx, y0 = ry - ly
     if (x0 == 0 || y0 == 0) {
         for (let i = lx; i <= rx; i++) {
@@ -47,7 +47,7 @@ Chunk.prototype.generate__infmaze_4 = function (lx, ly, rx, ry) {// 递归分割
         this.blk[mx][ly + 2 * (rand() % myl)] = _air()
     }
 }
-Chunk.prototype.generate__infmaze = function (x, y) {
+Chunk.prototype.generate_infmaze = function (x, y) {
     for (let i = 0; i < 64; i++) {
         this.blk[i][0] = block("wall")
         this.blk[0][i] = block("wall")
@@ -77,4 +77,4 @@ Chunk.prototype.generate__infmaze = function (x, y) {
     this.blk[2 * (rand() % 32) + 1][0] = content
     this.blk[0][2 * (rand() % 32) + 1] = _air()
 }
-function initgen__infmaze() { ply = new Player(1.5, 1.5) }
+function initgen_infmaze() { ply = new Player(1.5, 1.5) }

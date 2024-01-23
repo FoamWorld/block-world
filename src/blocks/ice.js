@@ -4,7 +4,8 @@ class ice extends Solid {
     showita(d) { d.fillStyle = "#A0C0FF"; d.fillRect(0, 0, bsz, bsz) }
     update(x, y) {
         for (let i = 0; i < 4; i++) {
-            if (ndim.blk(x + direx[i], y + direy[i]).brightness > 8) setblk(x, y, new water())
+            if (ndim.blk(x + direx[i], y + direy[i]).brightness > 8)
+                setblk(x, y, block("water"))
         }
     }
     onbroken(x, y, args) {

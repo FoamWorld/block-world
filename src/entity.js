@@ -20,6 +20,9 @@ class Player {
         this.h = h
         this.its = its
     }
+    get fight_table() {
+        return [10, 10, 10, 10]
+    }
     initgui() {
         this.its.html(gid("itms"), -8, "it")
         this.updategui()
